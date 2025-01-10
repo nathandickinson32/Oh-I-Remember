@@ -7,7 +7,7 @@ SELECT pg_terminate_backend(pid)
 FROM pg_stat_activity
 WHERE datname = 'oh_I_remember';
 
-DROP DATABASE final_capstone;
+DROP DATABASE "oh_I_remember";
 
 DROP USER final_capstone_owner;
 DROP USER final_capstone_appuser;
