@@ -10,4 +10,9 @@ CREATE TABLE users (
 	CONSTRAINT PK_user PRIMARY KEY (user_id)
 );
 
+CREATE TABLE messages (
+message_id SERIAL PRIMARY KEY,
+message
+)
+
 COMMIT TRANSACTION;
