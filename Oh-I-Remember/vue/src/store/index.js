@@ -25,6 +25,15 @@ export function createStore(currentToken, currentUser) {
         axios.defaults.headers.common = {};
       }
     },
+    getters: {
+      loggedInUserId(state) {
+        return state.user.id;
+      },
+      // check if someone is logged in
+      isLoggedIn(state){
+        return !!state.token;
+      }
+    }
   });
   return store;
 }

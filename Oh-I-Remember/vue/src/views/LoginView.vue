@@ -65,10 +65,18 @@ export default {
 </script>
 
 <style scoped>
-.form-input-group {
-  margin-bottom: 1rem;
+button {
+  width: 200px;
+  height: 50px;
+  margin: 20px;
 }
-label {
-  margin-right: 0.5rem;
+
+h1 {
+  text-align: center;
+  margin-top: 0;
+}
+
+.content {
+  margin-top: 10px;
 }
 </style>

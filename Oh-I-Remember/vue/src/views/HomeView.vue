@@ -1,7 +1,7 @@
 <template>
-  <div class="home">
-    <h1>Home</h1>
-    <p>You must be authenticated to see this</p>
+  <div class="content">
+    <h4>Welcome, {{ $store.state.user.firstName }}!</h4>
+
   </div>
 </template>
 
