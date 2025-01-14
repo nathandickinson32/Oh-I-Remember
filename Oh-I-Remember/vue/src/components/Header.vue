@@ -1,6 +1,6 @@
 <template>
   <div id="header">
-    <h1>logo</h1>
+    <img src="\assets\images\Remember_Logo.png" alt="logo" class="logo" />
   </div>
   <div id="nav">
     <router-link v-bind:to="{ name: 'home' }">Home</router-link>
@@ -10,18 +10,18 @@
 </template>
 
 <script>
-import { useRoute } from 'vue-router';
+import { useRoute } from "vue-router";
 export default {
-    setup() {
+  setup() {
     const route = useRoute();
     return { route };
-  }
-}
+  },
+};
 </script>
 
 <style scoped>
 .logo {
-  width: 175px;
+  width: 200px;
   height: auto;
 }
 
@@ -36,5 +36,11 @@ export default {
   margin: 10px;
   width: auto;
   text-align: center;
+}
+@media (max-width: 768px) {
+  .logo {
+    width: 175px;
+    height: auto;
+  }
 }
 </style>
