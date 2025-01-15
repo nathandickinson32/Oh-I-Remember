@@ -39,4 +39,13 @@ public class MessageController {
         System.out.println(LocalDateTime.now() + "User: " + principal.getName() + " accessed message " + messageId);
         return messageDao.getMessageById(messageId);
     }
+
+
+
+    //UPDATE
+
+
+
+
+    //DELETE
 }

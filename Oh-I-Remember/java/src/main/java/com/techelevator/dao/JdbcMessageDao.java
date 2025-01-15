@@ -18,6 +18,8 @@ public class JdbcMessageDao implements MessageDao {
     private JdbcTemplate template;
     public JdbcMessageDao(DataSource ds) { template = new JdbcTemplate(ds);}
 
+    //CREATE
+
     public Message createMessage(CreateMessageDto createMessageDto, int userId){
         String sql = "INSERT INTO messages(sent_by_id, received_by_id, message, date, is_archived) VALUES (?, ?, ?, ?, ?) RETURNING message_id;";
         int newMessageId = -1;
@@ -39,6 +41,10 @@ public class JdbcMessageDao implements MessageDao {
         return getMessageById(newMessageId);
     }
 
+
+
+    //READ
+
     public Message getMessageById(int messageId){
         Message message = null;
         String sql = "SELECT * FROM messages WHERE message_id = ?;";
@@ -55,6 +61,16 @@ public class JdbcMessageDao implements MessageDao {
         }
         return message;
     }
+
+
+    //UPDATE
+
+
+
+
+    //DELETE
+
+
 
    public Message mapRowToMessage(SqlRowSet results) {
         Message message = new Message();
