@@ -5,10 +5,10 @@ import com.techelevator.model.messages.Message;
 
 public interface MessageDao {
     //CREATE
-    Message createMessage(CreateMessageDto createMessageDto);
+    Message createMessage(CreateMessageDto createMessageDto, int userId);
 
     //READ
-
+    public Message getMessageById(int messageId);
 
     //UPDATE
 

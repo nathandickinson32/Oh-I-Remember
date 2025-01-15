@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 import com.techelevator.exception.DaoException;
-import com.techelevator.model.RegisterUserDto;
+import com.techelevator.model.user.RegisterUserDto;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -13,7 +13,7 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import com.techelevator.model.User;
+import com.techelevator.model.user.User;
 
 @Component
 public class JdbcUserDao implements UserDao {
@@ -86,6 +86,23 @@ public class JdbcUserDao implements UserDao {
             throw new DaoException("Data integrity violation", e);
         }
         return newUser;
+    }
+    @Override
+    public int getUserIdByUsername(String username) {
+        if (username == null) throw new IllegalArgumentException("Username cannot be null");
+        int result = -1;
+        String sql = "SELECT user_id FROM users WHERE username = ?";
+
+        try {
+            SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, username);
+            if (rowSet.next()) {
+                result = rowSet.getInt("user_id");
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        }
+
+        return result;
     }
 
     private User mapRowToUser(SqlRowSet rs) {
