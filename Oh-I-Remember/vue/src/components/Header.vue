@@ -6,6 +6,7 @@
     <router-link v-bind:to="{ name: 'home' }">Home</router-link>
     <span> | </span>
     <router-link v-bind:to="{ name: 'logout' }">Logout</router-link>
+    <router-link to="/weather">Weather Data</router-link>
   </div>
 </template>
 
