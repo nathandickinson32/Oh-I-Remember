@@ -10,9 +10,9 @@ public class ChatRoom {
     private int roomId;
     private String roomName;
     private boolean isGroup;
+    private int createdByUserId;
     private LocalDateTime createdAt;
     private List<User> members;
-
     public ChatRoom(){};
 
     public ChatRoom(int roomId, String roomName, boolean isGroup, LocalDateTime createdAt) {
@@ -52,6 +52,14 @@ public class ChatRoom {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public int getCreatedByUserId() {
+        return createdByUserId;
+    }
+
+    public void setCreatedByUserId(int createdByUserId) {
+        this.createdByUserId = createdByUserId;
     }
 
     public List<User> getMembers() {

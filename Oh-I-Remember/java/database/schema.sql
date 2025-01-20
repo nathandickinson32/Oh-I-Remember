@@ -18,16 +18,15 @@ CREATE TABLE chat_rooms (
 room_id SERIAL PRIMARY KEY,
 room_name VARCHAR(100),
 is_group BOOLEAN,
+created_by_user_id INT NOT NULL,
 created_at TIMESTAMP
 );
 
 CREATE TABLE room_members (
-room_member_id SERIAL PRIMARY KEY,
 room_id INT NOT NULL,
 user_id INT NOT NULL,
 joined_at TIMESTAMP NOT NULL,
-FOREIGN KEY (room_id) REFERENCES chat_rooms (room_id),
-FOREIGN KEY (user_id) REFERENCES users (user_id)
+PRIMARY KEY (room_id, user_id)
 );
 
  CREATE TABLE messages (
