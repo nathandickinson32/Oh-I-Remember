@@ -11,6 +11,8 @@ import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class JdbcMessageDao implements MessageDao{
@@ -41,6 +43,25 @@ public class JdbcMessageDao implements MessageDao{
     }
 
     //READ
+
+    public List<Message> getMessagesByRoomId(int roomId){
+        List<Message> messages = new ArrayList<>();
+        String sql = "SELECT * FROM messages WHERE room_id = ?;";
+        try {
+            SqlRowSet results = template.queryForRowSet(sql,roomId);
+            while(results.next()){
+                Message message= mapRowToMessage(results);
+                messages.add(message);
+            }
+
+        }catch (CannotGetJdbcConnectionException e){
+            throw new CannotGetJdbcConnectionException("[JDBC Chat Room DAO] Unable to connect to the database.");
+        } catch (DataIntegrityViolationException e){
+            throw new DataIntegrityViolationException("[JDBC Chat Room DAO] Unable to get members by Room Id.");
+        }
+        return messages;
+    }
+
     public  Message getMessageById(int messageId){
         Message message = null;
         String sql = "SELECT * FROM messages WHERE message_id = ?;";

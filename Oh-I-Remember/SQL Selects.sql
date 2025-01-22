@@ -7,3 +7,4 @@ SELECT room_members.user_id FROM users JOIN room_members ON users.user_id = room
 SELECT room_members.user_id FROM users JOIN room_members ON users.user_id = room_members.user_id WHERE room_members.room_id = 3;
 SELECT room_members.user_id FROM users JOIN room_members ON users.user_id = room_members.user_id WHERE room_members.room_id = 1;
 SELECT room_members.room_id FROM room_members JOIN users ON users.user_id = room_members.user_id WHERE room_members.user_id = 2;
+SELECT * FROM messages WHERE room_id = 1;
