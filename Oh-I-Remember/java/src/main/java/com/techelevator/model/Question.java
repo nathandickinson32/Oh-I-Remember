@@ -1,0 +1,88 @@
+package com.techelevator.model;
+
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+
+public class Question {
+    private int questionId;
+    private int roomId;
+    private int senderId;
+    private int receiverId;
+    private String question;
+    private String answer;
+    private boolean isAnswered;
+    private LocalDateTime createdAt;
+    private LocalDateTime answeredAt;
+
+    public int getQuestionId() {
+        return questionId;
+    }
+
+    public void setQuestionId(int questionId) {
+        this.questionId = questionId;
+    }
+
+    public int getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(int roomId) {
+        this.roomId = roomId;
+    }
+
+    public int getSenderId() {
+        return senderId;
+    }
+
+    public void setSenderId(int senderId) {
+        this.senderId = senderId;
+    }
+
+    public int getReceiverId() {
+        return receiverId;
+    }
+
+    public void setReceiverId(int receiverId) {
+        this.receiverId = receiverId;
+    }
+
+    public String getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(String question) {
+        this.question = question;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
+
+    public boolean isAnswered() {
+        return isAnswered;
+    }
+
+    public void setAnswered(boolean answered) {
+        isAnswered = answered;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getAnsweredAt() {
+        return answeredAt;
+    }
+
+    public void setAnsweredAt(LocalDateTime answeredAt) {
+        this.answeredAt = answeredAt;
+    }
+}
