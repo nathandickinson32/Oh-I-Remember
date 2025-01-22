@@ -47,6 +47,8 @@ public class ChatRoomController {
         return chatRoomDao.getRoomIdsByMemberId(idDto.getId());
     }
 
+
+    //UPDATE
     @PostMapping(path = "/add-member")
     public void addMemberToChatRoom(@RequestBody RoomMemberDto roomMemberDto, Principal principal){
         int roomId = roomMemberDto.getRoomId();

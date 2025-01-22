@@ -1,5 +1,6 @@
 package com.techelevator.dao;
 
+import com.techelevator.model.AnswerDto;
 import com.techelevator.model.Message;
 import com.techelevator.model.Question;
 import com.techelevator.model.QuestionDto;
@@ -16,6 +17,8 @@ public class JdbcQuestionDao implements QuestionDao{
     private JdbcTemplate template;
     public JdbcQuestionDao(DataSource ds){template = new JdbcTemplate(ds);}
 
+
+    //CREATE
     @Override
     public Question createQuestion(QuestionDto questionDto, int userId) {
         String sql = "INSERT INTO questions(room_id, sender_id, receiver_id, question, created_at) VALUES (?, ?, ?, ?, ?) RETURNING question_id;";
@@ -39,6 +42,8 @@ public class JdbcQuestionDao implements QuestionDao{
         return getQuestionById(questionId);
     }
 
+
+    //READ
     public Question getQuestionById(int questionId){
         Question question = null;
         String sql = "SELECT * FROM questions WHERE question_id = ?;";
@@ -54,6 +59,28 @@ public class JdbcQuestionDao implements QuestionDao{
             throw new DataIntegrityViolationException("[JDBC Message DAO] Unable to retrieve question by id: " + questionId);
         }
         return question;
+    }
+
+    //UPDATE
+    @Override
+    public Question answerQuestion(AnswerDto answerDto, int userId) {
+        String sql = "UPDATE questions SET answer = ?, is_answered = ?, answered_at = ? WHERE question_id =?";
+        try {
+             template.update(
+                    sql,
+                    answerDto.getAnswer(),
+                    true,
+                    LocalDateTime.now(),
+                    answerDto.getQuestionId()
+
+
+            );
+        }catch (CannotGetJdbcConnectionException e){
+            throw new CannotGetJdbcConnectionException("[JDBC Question DAO] Unable to connect to the database.");
+        } catch (DataIntegrityViolationException e){
+            throw new DataIntegrityViolationException("[JDBC Question DAO] Unable to create a new Question.");
+        }
+        return getQuestionById(answerDto.getQuestionId());
     }
 
 
