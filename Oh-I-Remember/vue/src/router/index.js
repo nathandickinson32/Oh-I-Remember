@@ -6,7 +6,6 @@ import HomeView from '../views/HomeView.vue';
 import LoginView from '../views/LoginView.vue';
 import LogoutView from '../views/LogoutView.vue';
 import RegisterView from '../views/RegisterView.vue';
-import WeatherData from '../components/WeatherData.vue';
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -18,7 +17,6 @@ import WeatherData from '../components/WeatherData.vue';
  */
 const routes = [
 
-  { path: '/weather', name: 'Weather', component: WeatherData },
   {
     path: '/',
     name: 'home',

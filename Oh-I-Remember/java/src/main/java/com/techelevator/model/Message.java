@@ -6,8 +6,8 @@ import java.time.LocalDateTime;
 
 public class Message {
     private int messageId;
-    private ChatRoom chatRoom;
-    private User sender;
+    private int roomId;
+    private int senderId;
     private String message;
     private LocalDateTime createdAt;
     private boolean isArchived;
@@ -15,10 +15,10 @@ public class Message {
     public Message() {
     }
 
-    public Message(int messageId, ChatRoom chatRoom, User sender, String message, LocalDateTime createdAt, boolean isArchived) {
+    public Message(int messageId, int roomId, int senderId, String message, LocalDateTime createdAt, boolean isArchived) {
         this.messageId = messageId;
-        this.chatRoom = chatRoom;
-        this.sender = sender;
+        this.roomId = roomId;
+        this.senderId = senderId;
         this.message = message;
         this.createdAt = createdAt;
         this.isArchived = isArchived;
@@ -32,20 +32,20 @@ public class Message {
         this.messageId = messageId;
     }
 
-    public ChatRoom getChatRoom() {
-        return chatRoom;
+    public int getRoomId() {
+        return roomId;
     }
 
-    public void setChatRoom(ChatRoom chatRoom) {
-        this.chatRoom = chatRoom;
+    public void setRoomId(int roomId) {
+        this.roomId = roomId;
     }
 
-    public User getSender() {
-        return sender;
+    public int getSenderId() {
+        return senderId;
     }
 
-    public void setSender(User sender) {
-        this.sender = sender;
+    public void setSenderId(int senderId) {
+        this.senderId = senderId;
     }
 
     public String getMessage() {
