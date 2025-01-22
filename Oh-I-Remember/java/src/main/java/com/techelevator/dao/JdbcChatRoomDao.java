@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class JdbcChatRoomDao implements ChatRoomDao{
@@ -60,9 +62,35 @@ public class JdbcChatRoomDao implements ChatRoomDao{
         return chatRoom;
     }
 
+    public List<Integer> getMembersByRoomId(int roomId){
+        List<Integer> memberIds = new ArrayList<>();
+        String sql = "SELECT room_members.user_id FROM users JOIN room_members ON users.user_id = room_members.user_id WHERE room_members.room_id = ?;";
+         try {
+             SqlRowSet results = template.queryForRowSet(sql,roomId);
+             while(results.next()){
+                 Integer num = results.getInt("user_id");
+                 memberIds.add(num);
+             }
+
+         }catch (CannotGetJdbcConnectionException e){
+             throw new CannotGetJdbcConnectionException("[JDBC Chat Room DAO] Unable to connect to the database.");
+         } catch (DataIntegrityViolationException e){
+             throw new DataIntegrityViolationException("[JDBC Chat Room DAO] Unable to get members by Room Id.");
+         }
+        return memberIds;
+    }
+
+    //UPDATE
 public void addMemberToChatRoom(int roomId, int userId){
         String sql = "INSERT INTO room_members (room_id, user_id, joined_at) VALUES (?,?,?);";
-        template.update(sql,roomId,userId,LocalDateTime.now());
+        try {
+            template.update(sql,roomId,userId,LocalDateTime.now());
+
+        }catch (CannotGetJdbcConnectionException e){
+            throw new CannotGetJdbcConnectionException("[JDBC Chat Room DAO] Unable to connect to the database.");
+        } catch (DataIntegrityViolationException e){
+            throw new DataIntegrityViolationException("[JDBC Chat Room DAO] Unable to add member to Chat Room.");
+        }
 }
 
 

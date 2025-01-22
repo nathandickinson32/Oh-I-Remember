@@ -13,7 +13,8 @@ public interface ChatRoomDao {
     //READ
     public ChatRoom getChatRoomById(int id);
 
-//    public List<User> getMembersByChatRoomId(int roomId);
+    public List<Integer> getMembersByRoomId(int roomId);
+
 
     //UPDATE
     void addMemberToChatRoom( int roomId, int userId);
