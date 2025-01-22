@@ -14,7 +14,7 @@ public interface ChatRoomDao {
     public ChatRoom getChatRoomById(int id);
 
     public List<Integer> getMembersByRoomId(int roomId);
-
+    public List<Integer> getRoomIdsByMemberId(int memberId);
 
     //UPDATE
     void addMemberToChatRoom( int roomId, int userId);

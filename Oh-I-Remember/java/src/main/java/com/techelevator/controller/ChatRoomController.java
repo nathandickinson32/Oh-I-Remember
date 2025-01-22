@@ -4,7 +4,7 @@ import com.techelevator.dao.ChatRoomDao;
 import com.techelevator.dao.UserDao;
 import com.techelevator.model.ChatRoom;
 import com.techelevator.model.CreateChatRoomDTO;
-import com.techelevator.model.RoomIdDto;
+import com.techelevator.model.IdDto;
 import com.techelevator.model.RoomMemberDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,9 +36,15 @@ public class ChatRoomController {
 
     //READ
     @GetMapping(path = "/room-members")
-    public List<Integer> getMembersByRoomId(@RequestBody RoomMemberDto roomIdDto, Principal principal){
-        System.out.println(LocalDateTime.now() + " User: " + principal.getName() + " retrieved members for chat room " + roomIdDto.getRoomId());
-        return chatRoomDao.getMembersByRoomId(roomIdDto.getRoomId());
+    public List<Integer> getMembersByRoomId(@RequestBody IdDto idDto, Principal principal){
+        System.out.println(LocalDateTime.now() + " User: " + principal.getName() + " retrieved members for chat room " + idDto.getId());
+        return chatRoomDao.getMembersByRoomId(idDto.getId());
+    }
+
+    @GetMapping(path = "/chat-rooms")
+    public List<Integer> getRoomIdsByUserId(@RequestBody IdDto idDto, Principal principal){
+        System.out.println(LocalDateTime.now() + " User: " + principal.getName() + " retrieved room ids for member " + idDto.getId());
+        return chatRoomDao.getRoomIdsByMemberId(idDto.getId());
     }
 
     @PostMapping(path = "/add-member")

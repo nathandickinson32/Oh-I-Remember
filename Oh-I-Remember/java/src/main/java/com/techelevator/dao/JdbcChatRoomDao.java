@@ -80,6 +80,24 @@ public class JdbcChatRoomDao implements ChatRoomDao{
         return memberIds;
     }
 
+    public List<Integer> getRoomIdsByMemberId(int memberId){
+        List<Integer> roomIds = new ArrayList<>();
+        String sql = "SELECT room_members.room_id FROM room_members JOIN users ON users.user_id = room_members.user_id WHERE room_members.user_id = ?;";
+        try {
+            SqlRowSet results = template.queryForRowSet(sql,memberId);
+            while(results.next()){
+                Integer num = results.getInt("room_id");
+                roomIds.add(num);
+            }
+
+        }catch (CannotGetJdbcConnectionException e){
+            throw new CannotGetJdbcConnectionException("[JDBC Chat Room DAO] Unable to connect to the database.");
+        } catch (DataIntegrityViolationException e){
+            throw new DataIntegrityViolationException("[JDBC Chat Room DAO] Unable to get members by Room Id.");
+        }
+        return roomIds;
+    }
+
     //UPDATE
 public void addMemberToChatRoom(int roomId, int userId){
         String sql = "INSERT INTO room_members (room_id, user_id, joined_at) VALUES (?,?,?);";
