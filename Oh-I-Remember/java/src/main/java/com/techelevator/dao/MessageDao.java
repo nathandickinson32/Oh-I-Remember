@@ -6,4 +6,7 @@ import com.techelevator.model.Message;
 public interface MessageDao {
     //CREATE
     public Message createMessage(CreateMessageDto createMessageDto, int userId);
+
+    //READ
+    public  Message getMessageById(int messageId);
 }

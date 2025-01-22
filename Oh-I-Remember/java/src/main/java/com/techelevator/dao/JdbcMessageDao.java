@@ -54,7 +54,8 @@ public class JdbcMessageDao implements MessageDao{
             throw new CannotGetJdbcConnectionException("[JDBC Message DAO] Unable to connect to the database.");
         } catch (DataIntegrityViolationException e){
             throw new DataIntegrityViolationException("[JDBC Message DAO] Unable to retrieve message by id: " + messageId);
-        }return message;
+        }
+        return message;
     }
 
 
