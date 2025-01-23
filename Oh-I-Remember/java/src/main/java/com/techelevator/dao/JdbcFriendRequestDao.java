@@ -74,7 +74,7 @@ public class JdbcFriendRequestDao implements FriendRequestDao{
             throw new DataIntegrityViolationException("[JDBC FriendRequest DAO] Unable to update Friend Request with id:" + friendRequestResponseDto.getRequestId());
         }
 
-        if(friendRequestResponseDto.getStatusId()== 1){
+        if(friendRequestResponseDto.getStatusId()== 2){
 
             //*******************************************************
             //method for creating new friendship data
