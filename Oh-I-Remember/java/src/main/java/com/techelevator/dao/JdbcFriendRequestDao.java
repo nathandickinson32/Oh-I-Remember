@@ -1,9 +1,6 @@
 package com.techelevator.dao;
 
-import com.techelevator.model.CreateFriendRequestDto;
-import com.techelevator.model.FriendRequest;
-import com.techelevator.model.IdDto;
-import com.techelevator.model.Question;
+import com.techelevator.model.*;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -63,7 +60,31 @@ public class JdbcFriendRequestDao implements FriendRequestDao{
 
 
     //UPDATE
-    public FriendRequest friendRequestResponse(IdDto requestId, )
+    public FriendRequest friendRequestResponse(FriendRequestResponseDto friendRequestResponseDto){
+        String sql = "UPDATE friend_requests SET status_id = ? WHERE request_id =?;";
+        try {
+            template.update(
+                    sql,
+                    friendRequestResponseDto.getStatusId(),
+                    friendRequestResponseDto.getRequestId()
+            );
+        }catch (CannotGetJdbcConnectionException e){
+            throw new CannotGetJdbcConnectionException("[JDBC FriendRequest DAO] Unable to connect to the database.");
+        } catch (DataIntegrityViolationException e){
+            throw new DataIntegrityViolationException("[JDBC FriendRequest DAO] Unable to update Friend Request with id:" + friendRequestResponseDto.getRequestId());
+        }
+
+        if(friendRequestResponseDto.getStatusId()== 1){
+
+            //*******************************************************
+            //method for creating new friendship data
+
+            return getFriendRequestById(friendRequestResponseDto.getRequestId());
+
+        }else{
+            return getFriendRequestById(friendRequestResponseDto.getRequestId());
+        }
+    }
 
 
     //MAP

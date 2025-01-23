@@ -4,6 +4,7 @@ import com.techelevator.dao.FriendRequestDao;
 import com.techelevator.dao.UserDao;
 import com.techelevator.model.CreateFriendRequestDto;
 import com.techelevator.model.FriendRequest;
+import com.techelevator.model.FriendRequestResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -30,5 +31,12 @@ public class FriendRequestController {
     public FriendRequest createFriendRequest(@RequestBody CreateFriendRequestDto createFriendRequestDto, Principal principal){
         System.out.println(LocalDateTime.now() + " User: " + principal.getName() + " created a new friend request");
         return friendRequestDao.createFriendRequest(createFriendRequestDto, userDao.getUserIdByUsername(principal.getName()));
+    }
+
+    //UPDATE
+    @PutMapping(path = "/response")
+    public FriendRequest friendRequestResponse(@RequestBody FriendRequestResponseDto friendRequestResponseDto, Principal principal){
+        System.out.println(LocalDateTime.now() + "User: " + principal.getName() + " added response to friend request " + friendRequestResponseDto.getRequestId());
+        return friendRequestDao.friendRequestResponse(friendRequestResponseDto);
     }
 }
