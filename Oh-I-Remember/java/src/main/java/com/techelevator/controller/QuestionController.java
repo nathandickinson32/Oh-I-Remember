@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.List;
+
 @RestController
 @RequestMapping(path = "/questions")
 @CrossOrigin
@@ -29,6 +31,22 @@ public class QuestionController {
         System.out.println(LocalDateTime.now() + " User: " + principal.getName() + " created a new question");
         return questionDao.createQuestion(questionDto, userDao.getUserIdByUsername(principal.getName()));
     }
+
+    //READ
+    @GetMapping(path = "/questions")
+    public List<Question> getQuestionsByReceiverId(Principal principal){
+       int receiverId = userDao.getUserIdByUsername(principal.getName());
+        System.out.println(LocalDateTime.now() + " User: " + principal.getName() + " retrieved questions for receiver id " + receiverId);
+        return questionDao.getQuestionsByReceiverId(receiverId);
+    }
+
+    @GetMapping(path = "/question-id/{questionId}")
+    public Question getQuestionByQuestionId(@PathVariable int questionId, Principal principal){
+        System.out.println(LocalDateTime.now() + " User: " + principal.getName() + " retrieved questions for question id " + questionId);
+        return questionDao.getQuestionById(questionId);
+    }
+
+
 
     //UPDATE
     @PutMapping(path = "/answer")

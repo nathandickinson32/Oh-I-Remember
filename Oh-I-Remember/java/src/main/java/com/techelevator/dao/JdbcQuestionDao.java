@@ -12,6 +12,9 @@ import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class JdbcQuestionDao implements QuestionDao{
     private JdbcTemplate template;
@@ -61,6 +64,25 @@ public class JdbcQuestionDao implements QuestionDao{
         return question;
     }
 
+    public List<Question> getQuestionsByReceiverId(int receiverId){
+        List<Question> questions = new ArrayList<>();
+        String sql = "SELECT * FROM questions WHERE receiver_id = ?;";
+
+        try{
+            SqlRowSet results = template.queryForRowSet(sql,receiverId);
+            while(results.next()){
+                Question question = new Question();
+                question = mapRowToQuestion(results);
+                questions.add(question);
+            }
+        }catch (CannotGetJdbcConnectionException e){
+            throw new CannotGetJdbcConnectionException("[JDBC Message DAO] Unable to connect to the database.");
+        } catch (DataIntegrityViolationException e){
+            throw new DataIntegrityViolationException("[JDBC Message DAO] Unable to retrieve questions by receiver id: " + receiverId);
+        }
+            return questions;
+    }
+
     //UPDATE
     @Override
     public Question answerQuestion(AnswerDto answerDto, int userId) {
@@ -94,7 +116,9 @@ public class JdbcQuestionDao implements QuestionDao{
         question.setQuestion(results.getString("question"));
         question.setAnswer(results.getString("answer"));
         question.setAnswered(results.getBoolean("is_answered"));
-        question.setCreatedAt(results.getTimestamp("created_at").toLocalDateTime());
+        question.setCreatedAt(results.getTimestamp("created_at") != null
+                ? results.getTimestamp("created_at").toLocalDateTime()
+                : null);
         question.setAnsweredAt(results.getTimestamp("answered_at") != null
                 ? results.getTimestamp("answered_at").toLocalDateTime()
                 : null);

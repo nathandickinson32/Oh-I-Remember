@@ -1,7 +1,7 @@
 BEGIN TRANSACTION;
 
 INSERT INTO users (username,password_hash,role,first_name, last_name) VALUES ('user','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER', 'Bob', 'Boberson');
-INSERT INTO users (username,password_hash,role,first_name, last_name) VALUES ('admin','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_ADMIN', 'Nathan', 'Dickinson');
+INSERT INTO users (username,password_hash,role,first_name, last_name) VALUES ('admin','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_ADMIN', 'Christie', 'Dickinson');
 
 INSERT INTO chat_rooms(room_name, is_group, created_by_user_id, created_at) VAlUES('Default Group', true, 2, '2025-01-10 08:00:00');
 

@@ -4,6 +4,8 @@ import com.techelevator.model.AnswerDto;
 import com.techelevator.model.Question;
 import com.techelevator.model.QuestionDto;
 
+import java.util.List;
+
 public interface QuestionDao {
 
     //CREATE
@@ -11,6 +13,7 @@ public interface QuestionDao {
 
     //READ
     public Question getQuestionById(int questionId);
+    public List<Question> getQuestionsByReceiverId(int receiverId);
 
 
     //UPDATE
