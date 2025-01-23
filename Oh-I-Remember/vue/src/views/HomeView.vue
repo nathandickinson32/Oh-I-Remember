@@ -3,7 +3,7 @@
     <h4>Welcome, {{ $store.state.user.firstName }}!</h4>
     <div class="menu-grid">
     
-        <router-link v-bind:to="{ name: 'questions' }">Questions</router-link>
+        <router-link v-bind:to="{ name: 'questions' }">I Remember!</router-link>
 
      
 
