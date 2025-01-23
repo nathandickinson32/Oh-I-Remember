@@ -4,6 +4,8 @@ SELECT * FROM room_members;
 SELECT * FROM messages;
 SELECT * FROM friend_requests;
 SELECT * FROM friends;
+SELECT * FROM questions;
+
 SELECT message FROM messages WHERE room_id = 1 ORDER BY created_at DESC;
 SELECT room_members.user_id FROM users JOIN room_members ON users.user_id = room_members.user_id WHERE room_members.room_id = 1;
 SELECT room_members.user_id FROM users JOIN room_members ON users.user_id = room_members.user_id WHERE room_members.room_id = 3;
@@ -12,3 +14,9 @@ SELECT room_members.room_id FROM room_members JOIN users ON users.user_id = room
 SELECT * FROM messages WHERE room_id = 1;
 INSERT INTO friend_requests(sender_id, receiver_id, created_at) VALUES (3, 2, '2025-01-10 09:00:00') RETURNING request_id;
 SELECT * FROM friend_requests WHERE request_id = 6;
+
+INSERT INTO questions(room_id, sender_id, receiver_id, question) VALUES(1,2,3,'Is this the second question?');
+INSERT INTO questions(room_id, sender_id, receiver_id, question) VALUES(1,2,3,'Is this the third question?');
+INSERT INTO questions(room_id, sender_id, receiver_id, question) VALUES(1,1,3,'Is this the fourth question?');
+
+
