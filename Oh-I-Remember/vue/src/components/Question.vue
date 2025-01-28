@@ -1,8 +1,10 @@
-<template>
+<template><div class="content">
     <router-link class="small-container"  :to="{name: 'answer-question', params: {questionId: question.questionId}}">  
         <h3>{{ question.question }}</h3>
         <h5>{{ question.senderUserName }}</h5>
     </router-link>
+</div>
+    
 </template>
 
 <script>

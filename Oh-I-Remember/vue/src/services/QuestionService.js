@@ -5,6 +5,9 @@ export default{
     getQuestionsByReceiverId(){
         return axios.get('/questions/questions');
     },
+    getQuestionsBySenderId(){
+        return axios.get('/questions/do-you-remember');
+    },
     getQuestionByQuestionId(questionId){
         return axios.get(`/questions/question-id/${questionId}`);
     },

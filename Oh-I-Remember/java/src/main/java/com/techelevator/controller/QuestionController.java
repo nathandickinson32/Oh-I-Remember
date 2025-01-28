@@ -39,6 +39,12 @@ public class QuestionController {
         System.out.println(LocalDateTime.now() + " User: " + principal.getName() + " retrieved questions for receiver id " + receiverId);
         return questionDao.getQuestionsByReceiverId(receiverId);
     }
+    @GetMapping(path = "/do-you-remember")
+    public List<Question> getQuestionsBySenderId(Principal principal){
+        int senderId = userDao.getUserIdByUsername(principal.getName());
+        System.out.println(LocalDateTime.now() + " User: " + principal.getName() + " retrieved questions for sender id " + senderId);
+        return questionDao.getQuestionsBySenderId(senderId);
+    }
 
     @GetMapping(path = "/question-id/{questionId}")
     public Question getQuestionByQuestionId(@PathVariable int questionId, Principal principal){

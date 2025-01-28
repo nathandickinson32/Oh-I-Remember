@@ -8,7 +8,7 @@ import LogoutView from '../views/LogoutView.vue';
 import RegisterView from '../views/RegisterView.vue';
 import QuestionListView from '../views/QuestionListView.vue';
 import AnswerQuestionView from '../views/AnswerQuestionView.vue'
-
+import DoYouRememberListView from '../views/DoYouRememberListView.vue'
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
  * inside of App.vue depending on the URL.
@@ -66,7 +66,15 @@ const routes = [
     meta: {
       requiresAuth: false
     }
-  }
+  },
+  {
+    path: "/do-you-remember",
+    name: "do-you-remember",
+    component: DoYouRememberListView,
+    meta: {
+      requiresAuth: false
+    }
+  },
 ];
 
 // Create the router

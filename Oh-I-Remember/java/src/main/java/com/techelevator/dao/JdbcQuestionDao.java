@@ -83,6 +83,25 @@ public class JdbcQuestionDao implements QuestionDao{
             return questions;
     }
 
+    public List<Question> getQuestionsBySenderId(int senderId){
+        List<Question> questions = new ArrayList<>();
+        String sql = "SELECT * FROM questions WHERE sender_id = ? AND is_answered = false;";
+
+        try{
+            SqlRowSet results = template.queryForRowSet(sql,senderId);
+            while(results.next()){
+                Question question = new Question();
+                question = mapRowToQuestion(results);
+                questions.add(question);
+            }
+        }catch (CannotGetJdbcConnectionException e){
+            throw new CannotGetJdbcConnectionException("[JDBC Message DAO] Unable to connect to the database.");
+        } catch (DataIntegrityViolationException e){
+            throw new DataIntegrityViolationException("[JDBC Message DAO] Unable to retrieve questions by receiver id: " + senderId);
+        }
+        return questions;
+    }
+
     //UPDATE
     @Override
     public Question answerQuestion(AnswerDto answerDto, int userId) {
