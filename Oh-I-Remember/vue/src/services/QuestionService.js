@@ -10,5 +10,8 @@ export default{
     },
     getUserById(id) {
         return axios.get(`/get-user/${id}`)
+    },
+    answerQuestion(answerDto) {
+        return axios.put('/questions/answer', answerDto)
     }
 }

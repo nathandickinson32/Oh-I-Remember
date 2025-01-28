@@ -66,7 +66,7 @@ public class JdbcQuestionDao implements QuestionDao{
 
     public List<Question> getQuestionsByReceiverId(int receiverId){
         List<Question> questions = new ArrayList<>();
-        String sql = "SELECT * FROM questions WHERE receiver_id = ?;";
+        String sql = "SELECT * FROM questions WHERE receiver_id = ? AND is_answered = false;";
 
         try{
             SqlRowSet results = template.queryForRowSet(sql,receiverId);
