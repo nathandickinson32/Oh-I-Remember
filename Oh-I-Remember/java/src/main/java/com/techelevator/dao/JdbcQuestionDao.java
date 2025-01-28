@@ -1,9 +1,6 @@
 package com.techelevator.dao;
 
-import com.techelevator.model.AnswerDto;
-import com.techelevator.model.Message;
-import com.techelevator.model.Question;
-import com.techelevator.model.QuestionDto;
+import com.techelevator.model.*;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -122,6 +119,22 @@ public class JdbcQuestionDao implements QuestionDao{
             throw new DataIntegrityViolationException("[JDBC Question DAO] Unable to create a new Question.");
         }
         return getQuestionById(answerDto.getQuestionId());
+    }
+    @Override
+    public Question updateQuestion(UpdateQuestionDto updateQuestionDto, int userId) {
+        String sql = "UPDATE questions SET question = ? WHERE question_id =?";
+        try {
+            template.update(
+                    sql,
+                    updateQuestionDto.getQuestion(),
+                    updateQuestionDto.getQuestionId()
+            );
+        }catch (CannotGetJdbcConnectionException e){
+            throw new CannotGetJdbcConnectionException("[JDBC Question DAO] Unable to connect to the database.");
+        } catch (DataIntegrityViolationException e){
+            throw new DataIntegrityViolationException("[JDBC Question DAO] Unable to create a new Question.");
+        }
+        return getQuestionById(updateQuestionDto.getQuestionId());
     }
 
 

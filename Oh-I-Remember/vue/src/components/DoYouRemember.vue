@@ -1,10 +1,15 @@
 <template>
   <div class="content">
-    <div class="small-container">
-        {{ question.question }}
+    <router-link class="small-container"
+    :to="{
+        name: 'edit-question',
+        params: {questionId: question.questionId}
+    }">
+        {{ question.question }}<br/>
+        <span class="label">You asked: </span>
         {{ question.receiverUserName }}
-    </div>
-  </div>
+    </router-link>
+</div>
 </template>
 
 <script>

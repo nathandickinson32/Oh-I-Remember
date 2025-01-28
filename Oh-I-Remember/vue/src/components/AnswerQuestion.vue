@@ -16,7 +16,6 @@
 </template>
 
 <script>
-import Question from "./Question.vue";
 import QuestionService from "../services/QuestionService";
 
 export default {
