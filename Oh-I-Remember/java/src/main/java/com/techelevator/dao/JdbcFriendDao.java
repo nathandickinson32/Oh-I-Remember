@@ -12,12 +12,11 @@ import javax.sql.DataSource;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Component
-public class JdbcFriendRequestDao implements FriendRequestDao{
+public class JdbcFriendDao implements FriendDao {
     private JdbcTemplate template;
-    JdbcFriendRequestDao(DataSource ds){template = new JdbcTemplate(ds);}
+    JdbcFriendDao(DataSource ds){template = new JdbcTemplate(ds);}
 
     //CREATE
     @Override

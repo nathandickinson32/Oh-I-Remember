@@ -1,6 +1,6 @@
 package com.techelevator.controller;
 
-import com.techelevator.dao.FriendRequestDao;
+import com.techelevator.dao.FriendDao;
 import com.techelevator.dao.UserDao;
 import com.techelevator.model.CreateFriendRequestDto;
 import com.techelevator.model.FriendRequest;
@@ -16,35 +16,35 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/friend-requests")
+@RequestMapping(path = "/friends")
 @CrossOrigin
 @PreAuthorize("isAuthenticated()")
-public class FriendRequestController {
+public class FriendController {
 
     @Autowired
-    private FriendRequestDao friendRequestDao;
+    private FriendDao friendDao;
 
     @Autowired
     private UserDao userDao;
 
     //CREATE
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping(path = "/create")
+    @PostMapping(path = "/friend-request")
     public FriendRequest createFriendRequest(@RequestBody CreateFriendRequestDto createFriendRequestDto, Principal principal){
         System.out.println(LocalDateTime.now() + " User: " + principal.getName() + " created a new friend request");
-        return friendRequestDao.createFriendRequest(createFriendRequestDto, userDao.getUserIdByUsername(principal.getName()));
+        return friendDao.createFriendRequest(createFriendRequestDto, userDao.getUserIdByUsername(principal.getName()));
     }
 
     //READ
-    @GetMapping(path = "/friends")
+    @GetMapping(path = "/friends-list")
     public List<User> getFriends(Principal principal){
         int userId = userDao.getUserIdByUsername(principal.getName());
-        return friendRequestDao.getFriends(userId);
+        return friendDao.getFriends(userId);
     }
     //UPDATE
     @PutMapping(path = "/response")
     public FriendRequest friendRequestResponse(@RequestBody FriendRequestResponseDto friendRequestResponseDto, Principal principal){
         System.out.println(LocalDateTime.now() + "User: " + principal.getName() + " added response to friend request " + friendRequestResponseDto.getRequestId());
-        return friendRequestDao.friendRequestResponse(friendRequestResponseDto);
+        return friendDao.friendRequestResponse(friendRequestResponseDto);
     }
 }

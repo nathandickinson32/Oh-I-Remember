@@ -1,9 +1,6 @@
 <template>
   <div class="content">
-    <div
-      class="small-container"
-     
-    >
+    <div class="small-container">
       <h3>{{ question.question }}</h3>
       <span>Asked By: <h5>{{ question.senderUserName }}</h5></span>
       <div v-if="question.answered===true">

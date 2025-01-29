@@ -7,7 +7,7 @@ import com.techelevator.model.user.User;
 
 import java.util.List;
 
-public interface FriendRequestDao {
+public interface FriendDao {
 
     //CREATE
     public FriendRequest createFriendRequest(CreateFriendRequestDto createFriendRequestDto, int userId);
