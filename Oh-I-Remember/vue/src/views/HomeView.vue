@@ -9,6 +9,11 @@
       <router-link v-bind:to="{ name: 'do-you-remember' }">Do You Remember?</router-link>
 
     </div>
+    <br/>
+    <!-- <div class="small-container" id="home-title">
+      <router-link v-bind:to="{ name: 'friends' }">Friends List</router-link>
+
+    </div> -->
        
 
      
