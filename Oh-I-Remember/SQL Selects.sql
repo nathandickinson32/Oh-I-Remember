@@ -22,5 +22,5 @@ INSERT INTO questions(room_id, sender_id, receiver_id, question) VALUES(1,3,2,'I
 INSERT INTO questions(room_id, sender_id, receiver_id, question) VALUES(1,3,1,'Is this the sixth question?');
 UPDATE questions SET is_answered = true WHERE question_id = 6
 
-
+INSERT INTO friends(user_id1,user_id2, created_at) VALUES (3,4,'2025-01-10 09:00:00');
 

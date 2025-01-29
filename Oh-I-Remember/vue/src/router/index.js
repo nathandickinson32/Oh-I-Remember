@@ -10,6 +10,8 @@ import QuestionListView from '../views/QuestionListView.vue';
 import AnswerQuestionView from '../views/AnswerQuestionView.vue'
 import DoYouRememberListView from '../views/DoYouRememberListView.vue'
 import UpdateMyQuestion from '../views/UpdateQuestionView.vue'
+import FriendsListView from '../views/FriendsListView.vue';
+
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
  * inside of App.vue depending on the URL.
@@ -80,6 +82,15 @@ const routes = [
     path: "/questions/edit-question/:questionId",
     name: "edit-question",
     component: UpdateMyQuestion,
+    meta: {
+      requiresAuth: false
+    }
+  },
+
+  {
+    path: "/friends-list",
+    name: "friends-list",
+    component: FriendsListView,
     meta: {
       requiresAuth: false
     }
