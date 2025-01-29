@@ -18,5 +18,9 @@ SELECT * FROM friend_requests WHERE request_id = 6;
 INSERT INTO questions(room_id, sender_id, receiver_id, question) VALUES(1,2,3,'Is this the second question?');
 INSERT INTO questions(room_id, sender_id, receiver_id, question) VALUES(1,2,3,'Is this the third question?');
 INSERT INTO questions(room_id, sender_id, receiver_id, question) VALUES(1,1,3,'Is this the fourth question?');
+INSERT INTO questions(room_id, sender_id, receiver_id, question) VALUES(1,3,2,'Is this the fifth question?');
+INSERT INTO questions(room_id, sender_id, receiver_id, question) VALUES(1,3,1,'Is this the sixth question?');
+
+
 
 
