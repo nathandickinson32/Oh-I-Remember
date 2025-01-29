@@ -8,6 +8,9 @@
     <span v-if="route.name ==='answer-question'"> | </span>
     <router-link v-if="route.name ==='answer-question'" :to="{name: 'questions'}"> Back to Questions </router-link>
 
+    <span v-if="route.name ==='edit-question'"> | </span>
+    <router-link v-if="route.name ==='edit-question'" :to="{name: 'do-you-remember'}"> Back to Questions </router-link>
+
     <span> | </span>
     <router-link v-bind:to="{ name: 'logout' }">Logout</router-link>
 

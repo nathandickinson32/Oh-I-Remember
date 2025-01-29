@@ -1,6 +1,6 @@
 <template>
   <div class="content">
-    <h1>Questions</h1>
+    <h1>Questions You Can Answer</h1>
     <question-list/>
   </div>
 </template>
