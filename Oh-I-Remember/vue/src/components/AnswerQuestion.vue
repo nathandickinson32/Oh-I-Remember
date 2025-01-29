@@ -1,8 +1,8 @@
 <template>
-  <div class="content">
-    <div class="large-container">
+    <div class="small-container">
+      <span>{{ senderUserName }} asked you: </span><br />
+
       {{ question.question }}<br />
-      {{ senderUserName }}<br />
       <label id="answer-title">Answer:</label><br/>
 
       <form id="answer-form" @submit.prevent="answerQuestion">
@@ -12,7 +12,6 @@
           <button type="submit">Answer Question</button>
       </form>
     </div>
-  </div>
 </template>
 
 <script>

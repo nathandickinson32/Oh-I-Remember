@@ -67,4 +67,14 @@ public class QuestionController {
         return questionDao.updateQuestion(updateQuestionDto, userDao.getUserIdByUsername(principal.getName()));
     }
 
+    //DELETE
+    @DeleteMapping(path="/delete")
+    public void deleteQuestion(@RequestBody IdDto idDto, Principal principal){
+        int questionId = idDto.getId();
+        System.out.println(LocalDateTime.now() + "User: " + principal.getName() + " deleted question " + questionId);
+        questionDao.deleteQuestion(questionId);
+
+
+    }
+
 }

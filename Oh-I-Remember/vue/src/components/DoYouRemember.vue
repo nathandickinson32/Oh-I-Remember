@@ -1,14 +1,11 @@
 <template>
   <div class="content">
-    <router-link class="small-container"
-    :to="{
-        name: 'edit-question',
-        params: {questionId: question.questionId}
-    }">
+    <div class="small-container">
         {{ question.question }}<br/>
         <span class="label">You asked: </span>
         {{ question.receiverUserName }}
-    </router-link>
+        <button @click="editQuestion">Edit Question</button>
+</div>
 </div>
 </template>
 
@@ -32,6 +29,10 @@ methods: {
           response.data.firstName + " " + response.data.lastName;
       });
     },
+    editQuestion(){
+        this.$router.push({ name: "edit-question", params: {questionId: this.question.questionId} });
+
+    }
 }
 }
 </script>

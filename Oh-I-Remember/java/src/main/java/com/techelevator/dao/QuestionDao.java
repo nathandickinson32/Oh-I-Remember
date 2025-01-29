@@ -21,4 +21,7 @@ public interface QuestionDao {
     //UPDATE
     public Question answerQuestion(AnswerDto answerDto, int userId);
     public Question updateQuestion(UpdateQuestionDto updateQuestionDto, int userId);
+
+    //DELETE
+    public void deleteQuestion(int questionId);
 }

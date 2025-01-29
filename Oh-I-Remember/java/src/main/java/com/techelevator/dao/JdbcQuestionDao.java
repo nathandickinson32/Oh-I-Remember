@@ -138,6 +138,22 @@ public class JdbcQuestionDao implements QuestionDao{
     }
 
 
+    //DELETE
+    public void deleteQuestion(int questionId){
+        String sql = "DELETE FROM questions WHERE question_id =?;";
+
+        try{
+            template.update(
+                    sql,questionId
+            );
+        }catch (CannotGetJdbcConnectionException e){
+            throw new CannotGetJdbcConnectionException("[JDBC Question DAO] Unable to connect to the database.");
+        } catch (DataIntegrityViolationException e){
+            throw new DataIntegrityViolationException("[JDBC Question DAO] Unable to delete Question.");
+        }
+
+    }
+
     //MAP
     public Question mapRowToQuestion(SqlRowSet results){
        Question question = new Question();
