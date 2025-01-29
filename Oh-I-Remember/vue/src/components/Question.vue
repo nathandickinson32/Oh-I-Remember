@@ -1,6 +1,6 @@
 <template>
   <div class="content">
-    <router-link
+    <div
       class="small-container"
       :to="{
         name: 'answer-question',
@@ -9,8 +9,12 @@
     >
       <h3>{{ question.question }}</h3>
       <span>Asked By: <h5>{{ question.senderUserName }}</h5></span>
-      
-    </router-link>
+      <div v-if="question.answered===true">
+         You answered:<br/> {{ question.answer }}
+        </div>
+        <button v-if="question.answered===false" @click="answerQuestion">Answer Question</button>
+
+    </div>
   </div>
 </template>
 
@@ -29,6 +33,11 @@ export default {
     this.getUser(this.question);
   },
   methods: {
+    
+    answerQuestion(){
+        this.$router.push({ name: "answer-question", params: {questionId: this.question.questionId} });
+
+    },
     getUser(question) {
       QuestionService.getUserById(question.senderId).then((response) => {
         question.senderUserName =

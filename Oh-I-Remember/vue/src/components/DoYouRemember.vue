@@ -4,7 +4,10 @@
         {{ question.question }}<br/>
         <span class="label">You asked: </span>
         {{ question.receiverUserName }}
-        <button @click="editQuestion">Edit Question</button>
+        <div v-if="question.answered===true">
+          {{ question.answer }}
+        </div>
+        <button v-if="question.answered===false" @click="editQuestion">Edit Question</button>
 </div>
 </div>
 </template>
