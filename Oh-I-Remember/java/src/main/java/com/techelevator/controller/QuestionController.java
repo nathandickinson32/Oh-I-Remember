@@ -68,9 +68,8 @@ public class QuestionController {
     }
 
     //DELETE
-    @DeleteMapping(path="/delete")
-    public void deleteQuestion(@RequestBody IdDto idDto, Principal principal){
-        int questionId = idDto.getId();
+    @DeleteMapping(path="/delete/{questionId}")
+    public void deleteQuestion(@PathVariable int questionId, Principal principal){
         System.out.println(LocalDateTime.now() + "User: " + principal.getName() + " deleted question " + questionId);
         questionDao.deleteQuestion(questionId);
 
