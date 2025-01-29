@@ -3,6 +3,9 @@ package com.techelevator.dao;
 import com.techelevator.model.CreateFriendRequestDto;
 import com.techelevator.model.FriendRequest;
 import com.techelevator.model.FriendRequestResponseDto;
+import com.techelevator.model.user.User;
+
+import java.util.List;
 
 public interface FriendRequestDao {
 
@@ -11,6 +14,7 @@ public interface FriendRequestDao {
 
     //READ
     public FriendRequest getFriendRequestById(int requestId);
+    public List<User> getFriends(int userId);
 
     //UPDATE
     public FriendRequest friendRequestResponse(FriendRequestResponseDto friendRequestResponseDto);

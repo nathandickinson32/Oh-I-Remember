@@ -1,6 +1,7 @@
 package com.techelevator.dao;
 
 import com.techelevator.model.*;
+import com.techelevator.model.user.User;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -9,6 +10,9 @@ import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @Component
 public class JdbcFriendRequestDao implements FriendRequestDao{
@@ -62,6 +66,27 @@ public class JdbcFriendRequestDao implements FriendRequestDao{
 
 
     //READ
+
+    public List<User> getFriends(int userId){
+        List<User> friendsList = new ArrayList<>();
+        String sql = "SELECT u.user_id, u.username, u.first_name, u.last_name FROM friends f " +
+                "JOIN users u ON (f.user_id1 = u.user_id OR f.user_id2 = u.user_id) " +
+                "WHERE u.user_id != ? AND (? IN (f.user_id1,f.user_id2));";
+        try {
+            SqlRowSet results = template.queryForRowSet(sql, userId, userId);
+            while(results.next()){
+                User user = new User();
+                user= mapRowToUser(results);
+                friendsList.add(user);
+            }
+        }catch (CannotGetJdbcConnectionException e){
+            throw new CannotGetJdbcConnectionException("[JDBC Message DAO] Unable to connect to the database.");
+        } catch (DataIntegrityViolationException e){
+            throw new DataIntegrityViolationException("[JDBC Message DAO] Unable to retrieve friends list by user id: " + userId);
+        }
+        return friendsList;
+    }
+
     @Override
     public FriendRequest getFriendRequestById(int requestId) {
        FriendRequest friendRequest = null;
@@ -152,5 +177,14 @@ public class JdbcFriendRequestDao implements FriendRequestDao{
         friendship.setUserId2(results.getInt("user_id2"));
         friendship.setCreatedAt(results.getTimestamp("created_at").toLocalDateTime());
         return friendship;
+    }
+    private User mapRowToUser(SqlRowSet rs) {
+        User user = new User();
+        user.setId(rs.getInt("user_id"));
+        user.setUsername(rs.getString("username"));
+        user.setFirstName(rs.getString("first_name"));
+        user.setLastName(rs.getString("last_name"));
+
+        return user;
     }
 }

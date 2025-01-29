@@ -2,10 +2,7 @@
   <div class="content">
     <div
       class="small-container"
-      :to="{
-        name: 'answer-question',
-        params: { questionId: question.questionId },
-      }"
+     
     >
       <h3>{{ question.question }}</h3>
       <span>Asked By: <h5>{{ question.senderUserName }}</h5></span>
