@@ -63,7 +63,7 @@ public class JdbcQuestionDao implements QuestionDao{
 
     public List<Question> getQuestionsByReceiverId(int receiverId){
         List<Question> questions = new ArrayList<>();
-        String sql = "SELECT * FROM questions WHERE receiver_id = ? AND is_answered = false;";
+        String sql = "SELECT * FROM questions WHERE receiver_id = ?";
 
         try{
             SqlRowSet results = template.queryForRowSet(sql,receiverId);
@@ -82,7 +82,7 @@ public class JdbcQuestionDao implements QuestionDao{
 
     public List<Question> getQuestionsBySenderId(int senderId){
         List<Question> questions = new ArrayList<>();
-        String sql = "SELECT * FROM questions WHERE sender_id = ? AND is_answered = false;";
+        String sql = "SELECT * FROM questions WHERE sender_id = ?";
 
         try{
             SqlRowSet results = template.queryForRowSet(sql,senderId);

@@ -20,7 +20,7 @@ INSERT INTO questions(room_id, sender_id, receiver_id, question) VALUES(1,2,3,'I
 INSERT INTO questions(room_id, sender_id, receiver_id, question) VALUES(1,1,3,'Is this the fourth question?');
 INSERT INTO questions(room_id, sender_id, receiver_id, question) VALUES(1,3,2,'Is this the fifth question?');
 INSERT INTO questions(room_id, sender_id, receiver_id, question) VALUES(1,3,1,'Is this the sixth question?');
-
+UPDATE questions SET is_answered = true WHERE question_id = 6
 
 
 
