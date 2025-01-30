@@ -58,6 +58,10 @@ export default {
     window.alert("You are already friends with this user.");
     return;
   }
+  if (this.friendsList.some(friend => friend.receiverId === this.receiverId && friend.status === 'pending')) {
+    window.alert("You already have a pending request with this user.");
+    return;
+  }
       FriendService.submitFriendRequest(this.receiverId)
         .then((response) => {
           if (response.status === 200) {

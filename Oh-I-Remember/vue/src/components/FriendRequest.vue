@@ -20,9 +20,7 @@ export default {
       },
     };
   },
-  created() {
-  console.log(this.friendRequest); // Add this to inspect the data passed to the component
-},
+
   props: {
     friendRequest: {
       type: Object,
