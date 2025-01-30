@@ -125,6 +125,13 @@ public class JdbcFriendDao implements FriendDao {
     }
 
 
+    public boolean checkPendingRequest(int senderId, int receiverId){
+        String sql = "SELECT COUNT(*) FROM friend_requests WHERE sender_id = ? AND receiver_id = ? AND status_id = 1";
+        Integer count = template.queryForObject(sql, Integer.class, senderId, receiverId);
+
+        return count != null && count > 0;
+    }
+
     //UPDATE
     public FriendRequest friendRequestResponse(FriendRequestResponseDto friendRequestResponseDto){
         String sql = "UPDATE friend_requests SET status_id = ? WHERE request_id =?;";

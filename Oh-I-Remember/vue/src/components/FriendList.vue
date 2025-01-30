@@ -39,22 +39,35 @@ export default {
     this.getFriends();
   },
   methods: {
-    submitFriendRequest(){
-        if(!this.receiverId) return;
-        FriendService.submitFriendRequest(this.receiverId)
-        .then(
-          (response) => {
-            if(response.status===200){
-            this.receiverId="";
-            this.addFriend= false;
-            window.alert("Success")
+    submitFriendRequest() {
+    if (!this.receiverId) return;
+    
+    FriendService.submitFriendRequest(this.receiverId)
+        .then((response) => {
+            // Check if the response status is 200 (success)
+            if (response.status === 200) {
+                this.receiverId = "";
+                this.addFriend = false;
+                window.alert("Success");
             }
-          
-          }
-        ).catch((error) => {
-          console.error("Error adding friend:", error);
+        })
+        .catch((error) => {
+            if (error.response) {
+                // If the status is 409 (Conflict), show the duplicate request message
+                if (error.response.status === 409) {
+                    window.alert(error.response.data.message || "Friend request already pending.");
+                } else {
+                    // For other errors, show a more general failure message
+                    window.alert(error.response.data.message || "Failed to send friend request.");
+                }
+            } else {
+                // If there was an unexpected error (network issues, etc.), log and alert
+                console.error("Error adding friend:", error);
+                window.alert("An unexpected error occurred. Please try again.");
+            }
         });
-    },
+},
+
     
     getFriends() {
       FriendService.getFriendsByUserId().then((response) => {
