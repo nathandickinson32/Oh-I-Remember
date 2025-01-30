@@ -86,6 +86,39 @@ public class JdbcFriendDao implements FriendDao {
         return friendsList;
     }
 
+    public List<FriendRequest> getFriendRequests(int userId) {
+        List<FriendRequest> friendRequestsList = new ArrayList<>();
+        String sql = "SELECT f.request_id, f.sender_id, f.receiver_id, u.user_id, u.username, u.first_name, u.last_name " +
+                "FROM friend_requests f " +
+                "JOIN users u ON f.sender_id = u.user_id " +
+                "WHERE f.receiver_id = ? AND u.user_id != ? AND f.status_id = 1;";
+
+        try {
+            SqlRowSet results = template.queryForRowSet(sql, userId, userId);
+            while (results.next()) {
+                FriendRequest friendRequest = new FriendRequest();
+                friendRequest.setRequestId(results.getInt("request_id"));
+                friendRequest.setSenderId(results.getInt("sender_id"));
+                friendRequest.setReceiverId(results.getInt("receiver_id"));
+
+                User user = new User();
+                user.setId(results.getInt("user_id"));
+                user.setUsername(results.getString("username"));
+                user.setFirstName(results.getString("first_name"));
+                user.setLastName(results.getString("last_name"));
+
+                friendRequest.setUser(user);
+
+                friendRequestsList.add(friendRequest);
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new CannotGetJdbcConnectionException("[JDBC FriendRequest DAO] Unable to connect to the database.");
+        } catch (DataIntegrityViolationException e) {
+            throw new DataIntegrityViolationException("[JDBC FriendRequest DAO] Unable to retrieve friend requests by user id: " + userId);
+        }
+        return friendRequestsList;
+    }
+
     @Override
     public FriendRequest getFriendRequestById(int requestId) {
        FriendRequest friendRequest = null;

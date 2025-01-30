@@ -17,6 +17,7 @@ public class User {
    private Set<Authority> authorities = new HashSet<>();
    private String firstName;
    private String lastName;
+
    public User() { }
 
    public User(int id, String username, String password, String authorities) {

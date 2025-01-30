@@ -1,5 +1,7 @@
 package com.techelevator.model;
 
+import com.techelevator.model.user.User;
+
 import java.time.LocalDateTime;
 
 public class FriendRequest {
@@ -8,6 +10,15 @@ public class FriendRequest {
     private int receiverId;
     private int statusId;
     private LocalDateTime createdAt;
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public int getRequestId() {
         return requestId;

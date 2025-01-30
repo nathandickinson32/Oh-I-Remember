@@ -24,3 +24,11 @@ UPDATE questions SET is_answered = true WHERE question_id = 6
 
 INSERT INTO friends(user_id1,user_id2, created_at) VALUES (3,4,'2025-01-10 09:00:00');
 
+SELECT u.user_id, u.username, u.first_name, u.last_name FROM friend_requests f 
+JOIN users u ON f.receiver_id = u.user_id  
+WHERE receiver_id =1;
+
+SELECT u.user_id, u.username, u.first_name, u.last_name
+FROM friend_requests f
+JOIN users u ON f.sender_id = u.user_id
+WHERE f.receiver_id = 3 AND u.user_id != 3;

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,19 +39,27 @@ public class FriendController {
 
             boolean exists = friendDao.checkPendingRequest(userId, createFriendRequestDto.getReceiverId());
             if (exists) {
-                //ResponseEntity allows for any object to be returned
-                //Here it is returning a map with a message key and a String message for the
-                //front to read and display
                 return ResponseEntity.status(HttpStatus.CONFLICT)
                         .body(Collections.singletonMap("message", "A pending friend request already exists."));
             }
 
             FriendRequest request = friendDao.createFriendRequest(createFriendRequestDto, userId);
+            if (request == null) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .body(Collections.singletonMap("message", "Failed to create the friend request. Please try again."));
+            }
+
             return ResponseEntity.ok(request);
 
+        } catch (CannotGetJdbcConnectionException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Collections.singletonMap("message", "Database connection issue. Please try again later."));
+        } catch (DataIntegrityViolationException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Collections.singletonMap("message", "Please make sure you entered a valid ID"));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(Collections.singletonMap("message", "An error occurred while processing the request. Make sure you entered a valid ID."));
+                    .body(Collections.singletonMap("message", "An error occurred while processing the request."));
         }
     }
 
@@ -60,8 +69,14 @@ public class FriendController {
         int userId = userDao.getUserIdByUsername(principal.getName());
         return friendDao.getFriends(userId);
     }
+
+    @GetMapping(path = "/friend-requests")
+    public List<FriendRequest> getFriendRequests(Principal principal){
+        int userId = userDao.getUserIdByUsername(principal.getName());
+        return friendDao.getFriendRequests(userId);
+    }
     //UPDATE
-    @PutMapping(path = "/response")
+    @PutMapping(path = "/request-response")
     public FriendRequest friendRequestResponse(@RequestBody FriendRequestResponseDto friendRequestResponseDto, Principal principal){
         System.out.println(LocalDateTime.now() + "User: " + principal.getName() + " added response to friend request " + friendRequestResponseDto.getRequestId());
         return friendDao.friendRequestResponse(friendRequestResponseDto);
