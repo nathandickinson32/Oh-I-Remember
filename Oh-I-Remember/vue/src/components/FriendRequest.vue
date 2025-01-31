@@ -45,7 +45,6 @@ export default {
       FriendService.deleteFriendRequest(this.friendRequest.requestId).then((response) =>{
         if (response.status === 200) {
             window.alert("Successfully Canceled");
-            window.location.reload(this.filterType='Sent');
             
 
           }
