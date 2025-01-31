@@ -65,20 +65,33 @@ public class FriendController {
 
     //READ
     @GetMapping(path = "/friends-list")
-    public List<User> getFriends(Principal principal){
+    public List<User> getFriends(Principal principal) {
         int userId = userDao.getUserIdByUsername(principal.getName());
         return friendDao.getFriends(userId);
     }
 
     @GetMapping(path = "/friend-requests")
-    public List<FriendRequest> getFriendRequests(Principal principal){
+    public List<FriendRequest> getFriendRequests(Principal principal) {
         int userId = userDao.getUserIdByUsername(principal.getName());
         return friendDao.getFriendRequests(userId);
     }
+
+    @PostMapping(path = "/user-info")
+    public List<User> getUserInfo(@RequestBody List<Integer> userIds, Principal principal) {
+        return friendDao.getUsersById(userIds);
+    }
+
     //UPDATE
     @PutMapping(path = "/request-response")
-    public FriendRequest friendRequestResponse(@RequestBody FriendRequestResponseDto friendRequestResponseDto, Principal principal){
+    public FriendRequest friendRequestResponse(@RequestBody FriendRequestResponseDto friendRequestResponseDto, Principal principal) {
         System.out.println(LocalDateTime.now() + "User: " + principal.getName() + " added response to friend request " + friendRequestResponseDto.getRequestId());
         return friendDao.friendRequestResponse(friendRequestResponseDto);
+    }
+
+    //DELETE
+    @DeleteMapping(path = "/delete-request/{requestId}")
+    public void deleteFriendRequest(@PathVariable int requestId, Principal principal) {
+        System.out.println(LocalDateTime.now() + "User: " + principal.getName() + " deleted request " + requestId);
+        friendDao.deleteFriendRequest(requestId);
     }
 }

@@ -10,14 +10,23 @@ public class FriendRequest {
     private int receiverId;
     private int statusId;
     private LocalDateTime createdAt;
-    private User user;
+    private User sender;
+    private User receiver;
 
-    public User getUser() {
-        return user;
+    public User getSender() {
+        return sender;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setSender(User sender) {
+        this.sender = sender;
+    }
+
+    public User getReceiver() {
+        return receiver;
+    }
+
+    public void setReceiver(User receiver) {
+        this.receiver = receiver;
     }
 
     public int getRequestId() {

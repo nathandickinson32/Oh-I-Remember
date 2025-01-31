@@ -16,10 +16,19 @@ export default {
         return axios.get('/friends/friend-requests');
     },
 
+    getUserInfo(userIds){
+        return axios.post('/friends/user-info', userIds)
+    },
+
     //UPDATE
     friendRequestResponse(friendRequestResponseDto) {
         return axios.put('/friends/request-response',  friendRequestResponseDto );
     },
 
+    
+
     //DELETE
+    deleteFriendRequest(requestId){
+        return axios.delete(`/friends/delete-request/${requestId}`)
+    }
 }

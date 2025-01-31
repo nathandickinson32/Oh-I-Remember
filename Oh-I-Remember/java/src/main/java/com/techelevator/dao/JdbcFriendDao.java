@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import javax.sql.DataSource;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Component
@@ -88,10 +89,12 @@ public class JdbcFriendDao implements FriendDao {
 
     public List<FriendRequest> getFriendRequests(int userId) {
         List<FriendRequest> friendRequestsList = new ArrayList<>();
-        String sql = "SELECT f.request_id, f.sender_id, f.receiver_id, u.user_id, u.username, u.first_name, u.last_name " +
+        String sql = "SELECT f.request_id, f.sender_id, f.receiver_id, u1.user_id AS sender_user_id, u2.user_id AS receiver_user_id, u1.username AS sender_username, u2.username AS receiver_username, " +
+        "u1.first_name AS sender_first_name, u2.first_name AS receiver_first_name, u1.last_name AS sender_last_name, u2.last_name AS receiver_last_name " +
                 "FROM friend_requests f " +
-                "JOIN users u ON f.sender_id = u.user_id " +
-                "WHERE f.receiver_id = ? AND u.user_id != ? AND f.status_id = 1;";
+                "JOIN users u1 ON f.sender_id = u1.user_id " +
+                "JOIN users u2 ON f.receiver_id = u2.user_id " +
+                "WHERE (f.receiver_id = ? OR f.sender_id = ?) AND f.status_id = 1;";
 
         try {
             SqlRowSet results = template.queryForRowSet(sql, userId, userId);
@@ -101,13 +104,20 @@ public class JdbcFriendDao implements FriendDao {
                 friendRequest.setSenderId(results.getInt("sender_id"));
                 friendRequest.setReceiverId(results.getInt("receiver_id"));
 
-                User user = new User();
-                user.setId(results.getInt("user_id"));
-                user.setUsername(results.getString("username"));
-                user.setFirstName(results.getString("first_name"));
-                user.setLastName(results.getString("last_name"));
+                User sender = new User();
+                sender.setId(results.getInt("sender_user_id"));
+                sender.setUsername(results.getString("sender_username"));
+                sender.setFirstName(results.getString("sender_first_name"));
+                sender.setLastName(results.getString("sender_last_name"));
 
-                friendRequest.setUser(user);
+                User receiver = new User();
+                receiver.setId(results.getInt("receiver_user_id"));
+                receiver.setUsername(results.getString("receiver_username"));
+                receiver.setFirstName(results.getString("receiver_first_name"));
+                receiver.setLastName(results.getString("receiver_last_name"));
+
+                friendRequest.setSender(sender);
+                friendRequest.setReceiver(receiver);
 
                 friendRequestsList.add(friendRequest);
             }
@@ -118,6 +128,7 @@ public class JdbcFriendDao implements FriendDao {
         }
         return friendRequestsList;
     }
+
 
     @Override
     public FriendRequest getFriendRequestById(int requestId) {
@@ -158,6 +169,30 @@ public class JdbcFriendDao implements FriendDao {
     }
 
 
+    public List<User> getUsersById(List<Integer> userIds){
+        List<User> users = new ArrayList<>();
+        //
+        String userIdsPlaceholder = String.join(",", Collections.nCopies(userIds.size(), "?"));
+
+        String sql = "SELECT user_id, username, first_name, last_name FROM users WHERE user_id IN (" + userIdsPlaceholder + ")";
+            try {
+                SqlRowSet results = template.queryForRowSet(sql, userIds.toArray());
+                while(results.next()){
+                    User user = new User();
+                    user= mapRowToUser(results);
+                    users.add(user);
+                }
+            }catch (CannotGetJdbcConnectionException e){
+                throw new CannotGetJdbcConnectionException("[JDBC Friend DAO] Unable to connect to the database.");
+            } catch (DataIntegrityViolationException e){
+                throw new DataIntegrityViolationException("[JDBC Friend DAO] Unable to retrieve user data");
+            }
+
+
+        return users;
+    }
+
+
     public boolean checkPendingRequest(int senderId, int receiverId){
         String sql = "SELECT COUNT(*) FROM friend_requests WHERE sender_id = ? AND receiver_id = ? AND status_id = 1";
         Integer count = template.queryForObject(sql, Integer.class, senderId, receiverId);
@@ -193,6 +228,18 @@ public class JdbcFriendDao implements FriendDao {
 
         }else{
             return getFriendRequestById(friendRequestResponseDto.getRequestId());
+        }
+    }
+
+    //DELETE
+    public void deleteFriendRequest(int requestId){
+        String sql = "DELETE FROM friend_requests WHERE request_id =?;";
+        try{
+            template.update(sql,requestId);
+        }catch (CannotGetJdbcConnectionException e){
+            throw new CannotGetJdbcConnectionException("[JDBC Friend DAO] Unable to connect to the database.");
+        } catch (DataIntegrityViolationException e){
+            throw new DataIntegrityViolationException("[JDBC Friend DAO] Unable to delete friend request.");
         }
     }
 

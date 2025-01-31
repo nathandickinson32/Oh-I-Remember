@@ -30,6 +30,7 @@ export default {
   data() {
     return {
       friendsList: [],
+      pendingRequests: [],
       addFriend: false,
       receiverId: "",
     };
@@ -39,8 +40,14 @@ export default {
   },
   created() {
     this.getFriends();
+    this.getPendingRequests();
   },
   methods: {
+    getPendingRequests() {
+      FriendService.getFriendRequestsByUserId().then((response) => {
+        this.pendingRequests = response.data;
+      });
+    },
     friendRequestList() {
       this.$router.push({ name: "friend-requests" });
     },
@@ -49,51 +56,65 @@ export default {
       if (!this.receiverId) return;
 
       const loggedInUserId = this.$store.getters.loggedInUserId;
-      if(parseInt(this.receiverId) === loggedInUserId){
+      if (parseInt(this.receiverId) === loggedInUserId) {
         window.alert("You cannot send a request to yourself");
         return;
       }
 
-      if (this.friendsList.some(friend => friend.id === this.receiverId)) {
-    window.alert("You are already friends with this user.");
-    return;
-  }
-  if (this.friendsList.some(friend => friend.receiverId === this.receiverId && friend.status === 'pending')) {
-    window.alert("You already have a pending request with this user.");
-    return;
-  }
+      if (this.friendsList.some((friend) => friend.id === this.receiverId)) {
+        window.alert("You are already friends with this user.");
+        return;
+      }
+      if (
+        this.pendingRequests.some(
+          (request) =>
+            request.receiverId === this.receiverId && request.senderId === loggedInUserId
+        )
+      ) {
+        window.alert("You already have a pending request with this user.");
+        return;
+      }
+      if (
+        this.pendingRequests.some(
+          (request) =>
+            request.senderId === this.receiverId &&
+            request.receiverId === loggedInUserId 
+        )
+      ) {
+        window.alert(
+          "This user has already sent you a friend request. Accept their request instead."
+        );
+        return;
+      }
       FriendService.submitFriendRequest(this.receiverId)
         .then((response) => {
           if (response.status === 200) {
             this.receiverId = "";
             this.addFriend = false;
             window.alert("Success");
-          }
-        })
-        .catch((error) => {
-          if (error.response) {
-            if (error.response.status === 409) {
+          } else if(response.response) {
+            if (response.response.status === 409) {
               window.alert(
-                error.response.data.message || "Friend request already pending."
+                response.response.data.message || "Friend request already pending."
               );
             } else {
               window.alert(
-                error.response.data.message || "Failed to send friend request."
+                response.response.data.message || "Failed to send friend request."
               );
             }
           } else {
-            console.error("Error adding friend:", error);
+            console.error("Error adding friend:", response);
             window.alert("An unexpected error occurred. Please try again.");
           }
-        });
-    },
+    })}
+    ,
 
     getFriends() {
       FriendService.getFriendsByUserId().then((response) => {
         this.friendsList = response.data;
       });
     },
-  },
+  }
 };
 </script>
 

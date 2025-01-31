@@ -17,7 +17,12 @@ public interface FriendDao {
     public List<User> getFriends(int userId);
     public boolean checkPendingRequest(int senderId, int receiverId);
     public List<FriendRequest> getFriendRequests(int userId);
+    public List<User> getUsersById(List<Integer> userIds);
 
     //UPDATE
     public FriendRequest friendRequestResponse(FriendRequestResponseDto friendRequestResponseDto);
+
+    //DELETE
+    public void deleteFriendRequest(int requestId);
+
 }
