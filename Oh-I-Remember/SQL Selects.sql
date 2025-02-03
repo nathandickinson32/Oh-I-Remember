@@ -5,6 +5,7 @@ SELECT * FROM messages;
 SELECT * FROM friend_requests;
 SELECT * FROM friends;
 SELECT * FROM questions;
+SELECT * FROM notifications;
 
 SELECT message FROM messages WHERE room_id = 1 ORDER BY created_at DESC;
 SELECT room_members.user_id FROM users JOIN room_members ON users.user_id = room_members.user_id WHERE room_members.room_id = 1;
