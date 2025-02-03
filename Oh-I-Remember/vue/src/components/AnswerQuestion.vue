@@ -44,6 +44,7 @@ export default {
           (response) => {
             if(response.status===200){
               window.alert("Question Answered!")
+              this.$router.push({name: "questions"})
             }
           }
         )

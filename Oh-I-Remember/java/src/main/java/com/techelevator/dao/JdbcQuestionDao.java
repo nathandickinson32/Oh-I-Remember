@@ -21,13 +21,12 @@ public class JdbcQuestionDao implements QuestionDao{
     //CREATE
     @Override
     public Question createQuestion(QuestionDto questionDto, int userId) {
-        String sql = "INSERT INTO questions(room_id, sender_id, receiver_id, question, created_at) VALUES (?, ?, ?, ?, ?) RETURNING question_id;";
+        String sql = "INSERT INTO questions(sender_id, receiver_id, question, created_at) VALUES ( ?, ?, ?, ?) RETURNING question_id;";
         int questionId = -1;
         try {
             questionId = template.queryForObject(
                     sql,
                     int.class,
-                    questionDto.getRoomId(),
                     userId,
                     questionDto.getReceiverId(),
                     questionDto.getQuestion(),
@@ -158,7 +157,6 @@ public class JdbcQuestionDao implements QuestionDao{
     public Question mapRowToQuestion(SqlRowSet results){
        Question question = new Question();
         question.setQuestionId(results.getInt("question_id"));
-        question.setRoomId(results.getInt("room_id"));
         question.setSenderId(results.getInt("sender_id"));
         question.setReceiverId(results.getInt("receiver_id"));
         question.setQuestion(results.getString("question"));

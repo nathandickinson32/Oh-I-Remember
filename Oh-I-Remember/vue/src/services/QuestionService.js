@@ -2,7 +2,9 @@ import axios from "axios";
 export default{
 
     //CREATE
-
+    askQuestionByReceiverId(questionDto){
+        return axios.post('/questions/create', questionDto );
+    },
 
 
     //READ

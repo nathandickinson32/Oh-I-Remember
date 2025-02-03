@@ -11,7 +11,7 @@ VALUES (1, 2, '2025-01-10 08:00:00'),(1, 1, '2025-01-10 08:00:01');
 INSERT INTO messages(room_id, sender_id, message, created_at, is_archived)
 VALUES (1, 2, 'Hello World!', '2025-01-10 09:00:00', false), (1, 1, 'It is just me... Bob ', '2025-01-10 09:01:00', false);
 
-INSERT INTO questions(room_id, sender_id, receiver_id, question) VALUES(1,2,1,'Is this the first question?');
+INSERT INTO questions(sender_id, receiver_id, question) VALUES(2,1,'Is this the first question?');
 
 INSERT INTO statuses (status_name)
 VALUES ('Pending'), ('Accepted'), ('Denied');

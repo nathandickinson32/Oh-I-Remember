@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 
 public class Question {
     private int questionId;
-    private int roomId;
     private int senderId;
     private int receiverId;
     private String question;
@@ -22,13 +21,7 @@ public class Question {
         this.questionId = questionId;
     }
 
-    public int getRoomId() {
-        return roomId;
-    }
 
-    public void setRoomId(int roomId) {
-        this.roomId = roomId;
-    }
 
     public int getSenderId() {
         return senderId;

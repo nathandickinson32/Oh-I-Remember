@@ -46,7 +46,6 @@ PRIMARY KEY (room_id, user_id)
 
  CREATE TABLE questions(
  question_id SERIAL PRIMARY KEY,
- room_id INT NOT NULL,
  sender_id INT NOT NULL,
  receiver_id INT NOT NULL,
  question VARCHAR NOT NULL,
@@ -54,7 +53,6 @@ PRIMARY KEY (room_id, user_id)
  is_answered BOOLEAN DEFAULT FALSE,
  created_at TIMESTAMP,
  answered_at TIMESTAMP,
- FOREIGN KEY (room_id) REFERENCES chat_rooms (room_id),
  FOREIGN KEY (sender_id) REFERENCES users (user_id),
  FOREIGN KEY (receiver_id) REFERENCES users (user_id)
  );

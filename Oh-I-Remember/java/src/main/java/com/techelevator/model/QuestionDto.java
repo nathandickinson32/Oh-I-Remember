@@ -1,18 +1,12 @@
 package com.techelevator.model;
 
 public class QuestionDto {
-    private int roomId;
+
 
     private int receiverId;
     private String question;
 
-    public int getRoomId() {
-        return roomId;
-    }
 
-    public void setRoomId(int roomId) {
-        this.roomId = roomId;
-    }
 
 
     public int getReceiverId() {
