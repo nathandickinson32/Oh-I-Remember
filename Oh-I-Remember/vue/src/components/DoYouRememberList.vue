@@ -1,5 +1,6 @@
 <template>
   <div class="content">
+    <button @click="askQuestion">Ask New Question</button>
     <div class="filter-section">
         <label @click="showUnAnsweredQuestions" class="clickable-label">Unanswered</label>
         <span class="seperator"> | </span>
@@ -60,6 +61,9 @@ export default {
     showUnAnsweredQuestions(){
         this.filterType ='unanswered'
     },
+    askQuestion(){
+      this.$router.push({name: "ask-question-view"})
+    }
   },
 };
 </script>

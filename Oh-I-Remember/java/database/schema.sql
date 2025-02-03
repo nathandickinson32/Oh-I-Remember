@@ -8,6 +8,7 @@ DROP TABLE IF EXISTS questions;
 DROP TABLE IF EXISTS statuses;
 DROP TABLE IF EXISTS friend_requests;
 DROP TABLE IF EXISTS friends;
+DROP TABLE IF EXISTS notifications;
 
 CREATE TABLE users (
 	user_id SERIAL,
@@ -81,5 +82,14 @@ FOREIGN KEY (user_id1) REFERENCES users(user_id),
 FOREIGN KEY (user_id2) REFERENCES users(user_id)
 );
 
+CREATE TABLE notifications (
+notification_id SERIAL PRIMARY KEY,
+user_id INT NOT NULL,
+type VARCHAR(50) NOT NULL CHECK (type IN ('new_question', 'friend_request')),
+reference_id INT NOT NULL,
+is_read BOOLEAN NOT NULL,
+created_at TIMESTAMP,
+FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
 
 COMMIT TRANSACTION;

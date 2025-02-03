@@ -18,5 +18,6 @@ VALUES ('Pending'), ('Accepted'), ('Denied');
 
 INSERT INTO friend_requests (sender_id, receiver_id, status_id, created_at) VALUES(1,2,1, '2025-01-10 09:01:00');
 
+INSERT INTO notifications (user_id, type, reference_id, is_read, created_at) VALUES (2, 'new_question', 1, false, '2025-01-10 09:01:00');
 
 COMMIT TRANSACTION;

@@ -1,6 +1,7 @@
 package com.techelevator.dao;
 
 import com.techelevator.model.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -17,6 +18,8 @@ public class JdbcQuestionDao implements QuestionDao{
     private JdbcTemplate template;
     public JdbcQuestionDao(DataSource ds){template = new JdbcTemplate(ds);}
 
+    @Autowired
+    private NotificationDao notificationDao;
 
     //CREATE
     @Override
@@ -26,7 +29,7 @@ public class JdbcQuestionDao implements QuestionDao{
         try {
             questionId = template.queryForObject(
                     sql,
-                    int.class,
+                    Integer.class,
                     userId,
                     questionDto.getReceiverId(),
                     questionDto.getQuestion(),
@@ -38,6 +41,12 @@ public class JdbcQuestionDao implements QuestionDao{
         } catch (DataIntegrityViolationException e){
             throw new DataIntegrityViolationException("[JDBC Question DAO] Unable to create a new Question.");
         }
+        CreateNotificationDto createNotificationDto = new CreateNotificationDto();
+        createNotificationDto.setUserId(questionDto.getReceiverId());
+        createNotificationDto.setType("new_question");
+        createNotificationDto.setReferenceId(questionId);
+        notificationDao.createNotification(createNotificationDto);
+
         return getQuestionById(questionId);
     }
 
