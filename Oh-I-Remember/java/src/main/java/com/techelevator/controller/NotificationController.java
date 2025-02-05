@@ -2,12 +2,10 @@ package com.techelevator.controller;
 
 import com.techelevator.dao.NotificationDao;
 import com.techelevator.dao.UserDao;
+import com.techelevator.model.NotificationReadRequestDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
@@ -47,5 +45,13 @@ public class NotificationController {
         int userId = userDao.getUserIdByUsername(principal.getName());
         System.out.println(LocalDateTime.now() + "Retrieved Friend Request notifications for User: " + principal.getName());
         return notificationDao.numberOfFriendRequestNotifications(userId);
+    }
+
+    //UPDATE
+    @PutMapping(path = "/mark-as-read")
+    public void markAsRead(@RequestBody NotificationReadRequestDto notificationReadRequestDto, Principal principal){
+        int userId = userDao.getUserIdByUsername(principal.getName());
+        System.out.println(LocalDateTime.now() + "User: " + principal.getName() + " read " + notificationReadRequestDto.getType() + "notifications");
+        notificationDao.markAsRead(notificationReadRequestDto,userId);
     }
 }

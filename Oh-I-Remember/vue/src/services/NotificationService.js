@@ -17,6 +17,11 @@ export default {
 
     getNumberOfNewFriendNotifications(){
         return axios.get('/notifications/new-friends-notifications')
+    },
+
+    //UPDATE
+    markAsRead(notificationReadRequestDto){
+        return axios.put('/notifications/mark-as-read', notificationReadRequestDto)
     }
 
 }

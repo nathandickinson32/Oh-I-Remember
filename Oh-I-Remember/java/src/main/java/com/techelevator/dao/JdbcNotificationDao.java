@@ -2,6 +2,7 @@ package com.techelevator.dao;
 
 import com.techelevator.model.CreateNotificationDto;
 import com.techelevator.model.Notification;
+import com.techelevator.model.NotificationReadRequestDto;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.relational.core.sql.Not;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
@@ -53,50 +54,51 @@ public class JdbcNotificationDao implements NotificationDao {
     @Override
     public int numberOfQuestionNotifications(int userId) {
         int numberOfNotifications = -1;
-        String sql = "SELECT COUNT(*) FROM notifications WHERE user_id = ? AND type = 'new_question';";
+        String sql = "SELECT COUNT(*) FROM notifications WHERE user_id = ? AND type = 'new_question' AND is_read = false;";
         try {
             numberOfNotifications = template.queryForObject(sql, Integer.class, userId);
-        }catch (CannotGetJdbcConnectionException e){
+        } catch (CannotGetJdbcConnectionException e) {
             throw new CannotGetJdbcConnectionException("[JDBC Notification DAO] Unable to connect to the database.");
-        } catch (DataIntegrityViolationException e){
+        } catch (DataIntegrityViolationException e) {
             throw new DataIntegrityViolationException("[JDBC Notification DAO] Unable to retrieve new question Notification by id: " + userId);
         }
         return numberOfNotifications;
     }
 
-    public int numberOfFriendRequestNotifications(int userId){
+    public int numberOfFriendRequestNotifications(int userId) {
         int numberOfNotifications = -1;
-        String sql = "SELECT COUNT(*) FROM notifications WHERE user_id = ? AND type = 'friend_request';";
+        String sql = "SELECT COUNT(*) FROM notifications WHERE user_id = ? AND type = 'friend_request' AND is_read = false;";
         try {
             numberOfNotifications = template.queryForObject(sql, Integer.class, userId);
-        }catch (CannotGetJdbcConnectionException e){
+        } catch (CannotGetJdbcConnectionException e) {
             throw new CannotGetJdbcConnectionException("[JDBC Notification DAO] Unable to connect to the database.");
-        } catch (DataIntegrityViolationException e){
-            throw new DataIntegrityViolationException("[JDBC Notification DAO] Unable to retrieve new question Notification by id: " + userId);
-        }
-        return numberOfNotifications;
-    }
-    public int numberOfNewFriendsNotifications(int userId){
-        int numberOfNotifications = -1;
-        String sql = "SELECT COUNT(*) FROM notifications WHERE user_id = ? AND type = 'new_friend';";
-        try {
-            numberOfNotifications = template.queryForObject(sql, Integer.class, userId);
-        }catch (CannotGetJdbcConnectionException e){
-            throw new CannotGetJdbcConnectionException("[JDBC Notification DAO] Unable to connect to the database.");
-        } catch (DataIntegrityViolationException e){
+        } catch (DataIntegrityViolationException e) {
             throw new DataIntegrityViolationException("[JDBC Notification DAO] Unable to retrieve new question Notification by id: " + userId);
         }
         return numberOfNotifications;
     }
 
-    public int numberOfNewAnswerResponseNotifications(int userId){
+    public int numberOfNewFriendsNotifications(int userId) {
         int numberOfNotifications = -1;
-        String sql = "SELECT COUNT(*) FROM notifications WHERE user_id = ? AND type = 'answer_response';";
+        String sql = "SELECT COUNT(*) FROM notifications WHERE user_id = ? AND type = 'new_friend' AND is_read = false;";
         try {
             numberOfNotifications = template.queryForObject(sql, Integer.class, userId);
-        }catch (CannotGetJdbcConnectionException e){
+        } catch (CannotGetJdbcConnectionException e) {
             throw new CannotGetJdbcConnectionException("[JDBC Notification DAO] Unable to connect to the database.");
-        } catch (DataIntegrityViolationException e){
+        } catch (DataIntegrityViolationException e) {
+            throw new DataIntegrityViolationException("[JDBC Notification DAO] Unable to retrieve new question Notification by id: " + userId);
+        }
+        return numberOfNotifications;
+    }
+
+    public int numberOfNewAnswerResponseNotifications(int userId) {
+        int numberOfNotifications = -1;
+        String sql = "SELECT COUNT(*) FROM notifications WHERE user_id = ? AND type = 'answer_response' AND is_read = false;";
+        try {
+            numberOfNotifications = template.queryForObject(sql, Integer.class, userId);
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new CannotGetJdbcConnectionException("[JDBC Notification DAO] Unable to connect to the database.");
+        } catch (DataIntegrityViolationException e) {
             throw new DataIntegrityViolationException("[JDBC Notification DAO] Unable to retrieve new question Notification by id: " + userId);
         }
         return numberOfNotifications;
@@ -110,17 +112,30 @@ public class JdbcNotificationDao implements NotificationDao {
             if (results.next()) {
                 notification = mapRowToNotification(results);
             }
-        }catch (CannotGetJdbcConnectionException e){
+        } catch (CannotGetJdbcConnectionException e) {
             throw new CannotGetJdbcConnectionException("[JDBC Notification DAO] Unable to connect to the database.");
-        } catch (DataIntegrityViolationException e){
+        } catch (DataIntegrityViolationException e) {
             throw new DataIntegrityViolationException("[JDBC Notification DAO] Unable to retrieve Notification by id: " + id);
         }
         return notification;
     }
 
     @Override
-    public Notification markAsRead(int notificationId) {
-        return null;
+    public void markAsRead(NotificationReadRequestDto notificationReadRequestDto, int userId) {
+        String sql = "UPDATE notifications SET is_read = true WHERE user_id = ? AND type = ?;";
+
+        try {
+            template.update(
+                    sql,
+                    userId,
+                    notificationReadRequestDto.getType()
+            );
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new CannotGetJdbcConnectionException("[JDBC Notification DAO] Unable to connect to the database.");
+        } catch (DataIntegrityViolationException e) {
+            throw new DataIntegrityViolationException("[JDBC Notification DAO] Unable to update Notifications for id:" + userId);
+        }
+
     }
 
 

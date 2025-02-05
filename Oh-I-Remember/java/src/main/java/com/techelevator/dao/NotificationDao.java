@@ -2,6 +2,7 @@ package com.techelevator.dao;
 
 import com.techelevator.model.CreateNotificationDto;
 import com.techelevator.model.Notification;
+import com.techelevator.model.NotificationReadRequestDto;
 
 import java.util.List;
 
@@ -18,6 +19,5 @@ public interface NotificationDao {
 
 
     //UPDATE
-    public Notification markAsRead(int notificationId);
-
+    public void markAsRead(NotificationReadRequestDto notificationReadRequestDto, int userId);
 }
