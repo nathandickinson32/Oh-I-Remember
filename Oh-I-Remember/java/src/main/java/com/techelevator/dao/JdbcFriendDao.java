@@ -4,6 +4,7 @@ import com.techelevator.model.*;
 import com.techelevator.model.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -21,9 +22,12 @@ public class JdbcFriendDao implements FriendDao {
     JdbcFriendDao(DataSource ds){template = new JdbcTemplate(ds);}
     @Autowired
     NotificationDao notificationDao;
+    @Autowired
+    UserDao userDao;
     //CREATE
     @Override
     public FriendRequest createFriendRequest(CreateFriendRequestDto createFriendRequestDto, int userId) {
+       int receiverId = userDao.getUserIdByUsername(createFriendRequestDto.getUserName());
         String sql = "INSERT INTO friend_requests(sender_id, receiver_id, status_id, created_at) VALUES (?, ?, ?, ?) RETURNING request_id;";
         int requestId = -1;
 
@@ -32,7 +36,7 @@ public class JdbcFriendDao implements FriendDao {
                     sql,
                     int.class,
                     userId,
-                    createFriendRequestDto.getReceiverId(),
+                    receiverId,
                     1,
                     LocalDateTime.now()
             );
@@ -43,7 +47,7 @@ public class JdbcFriendDao implements FriendDao {
             throw new DataIntegrityViolationException("[JDBC Friend Request DAO] Unable to create a new Friend Request.");
         }
         CreateNotificationDto createNotificationDto = new CreateNotificationDto();
-        createNotificationDto.setUserId(createFriendRequestDto.getReceiverId());
+        createNotificationDto.setUserId(receiverId);
         createNotificationDto.setType("friend_request");
         createNotificationDto.setReferenceId(requestId);
         notificationDao.createNotification(createNotificationDto);
@@ -201,12 +205,19 @@ public class JdbcFriendDao implements FriendDao {
     }
 
 
-    public boolean checkPendingRequest(int senderId, int receiverId){
+    public boolean checkPendingRequest(int senderId, String receiverUserName) {
+        Integer receiverId = userDao.getUserIdByUsername(receiverUserName);
+
+        if (receiverId == null) {
+            return false; // No request exists if the user doesn't exist
+        }
+
         String sql = "SELECT COUNT(*) FROM friend_requests WHERE sender_id = ? AND receiver_id = ? AND status_id = 1";
         Integer count = template.queryForObject(sql, Integer.class, senderId, receiverId);
 
         return count != null && count > 0;
     }
+
 
     //UPDATE
     public FriendRequest friendRequestResponse(FriendRequestResponseDto friendRequestResponseDto){

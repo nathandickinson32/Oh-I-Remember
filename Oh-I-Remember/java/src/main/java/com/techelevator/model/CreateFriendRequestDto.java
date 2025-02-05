@@ -2,15 +2,13 @@ package com.techelevator.model;
 
 public class CreateFriendRequestDto {
 
-    private int receiverId;
+    private String userName;
 
-
-
-    public int getReceiverId() {
-        return receiverId;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setReceiverId(int receiverId) {
-        this.receiverId = receiverId;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }

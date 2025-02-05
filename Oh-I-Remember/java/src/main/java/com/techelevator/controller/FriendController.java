@@ -37,7 +37,7 @@ public class FriendController {
         try {
             int userId = userDao.getUserIdByUsername(principal.getName());
 
-            boolean exists = friendDao.checkPendingRequest(userId, createFriendRequestDto.getReceiverId());
+            boolean exists = friendDao.checkPendingRequest(userId, createFriendRequestDto.getUserName());
             if (exists) {
                 return ResponseEntity.status(HttpStatus.CONFLICT)
                         .body(Collections.singletonMap("message", "A pending friend request already exists."));
