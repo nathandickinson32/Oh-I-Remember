@@ -6,12 +6,12 @@
     </div>
     <br/>
     <div class="small-container" id="home-title">
-      <router-link v-bind:to="{ name: 'do-you-remember' }">Do You Remember?</router-link>
+      <router-link v-bind:to="{ name: 'do-you-remember' }">Do You Remember? {{ this.answerNotificationCount }}</router-link>
 
     </div>
     <br/>
     <div class="small-container" id="home-title">
-      <router-link v-bind:to="{ name: 'friends-list' }">Friends List</router-link>
+      <router-link v-bind:to="{ name: 'friends-list' }">Friends List {{ this.newFriendNotificationCount }}</router-link>
 
     </div>
        
@@ -28,16 +28,32 @@ export default {
   data(){
     return{
       questionNotificationCount: "",
+      answerNotificationCount: "",
+      newFriendNotificationCount: "",
+
     }
   },
   created(){
     this.getNumberOfQuestionNotifications();
+    this.getNumberOfAnswerNotifications();
+    this.getNewFriendNotificationCount();
+
 
   },
   methods: {
     getNumberOfQuestionNotifications() {
         NotificationService.getNumberOfQuestionNotifications().then((response) => {
           this.questionNotificationCount = response.data;
+        })
+    },
+    getNumberOfAnswerNotifications() {
+        NotificationService.getNumberOfNewAnswerNotifications().then((response) => {
+          this.answerNotificationCount = response.data;
+        })
+    },
+    getNewFriendNotificationCount() {
+        NotificationService.getNumberOfNewFriendNotifications().then((response) => {
+          this.newFriendNotificationCount = response.data;
         })
     },
   }
