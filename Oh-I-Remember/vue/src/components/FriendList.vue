@@ -9,7 +9,7 @@
       <button @click="submitFriendRequest">Submit</button>
     </div>
 
-    <button @click="friendRequestList">Friend Requests: {{ this.notificationCount }}     </button>
+    <button @click="friendRequestList('friend_request')">Friend Requests: {{ this.notificationCount }}     </button>
     <div class="friend-list" v-if="friendsList.length === 0">
       <h4>Be sure to add friends!</h4>
     </div>
@@ -34,7 +34,9 @@ export default {
       pendingRequests: [],
       addFriend: false,
       receiverId: "",
-      notificationCount: ""
+      notificationCount: "",
+      notificationReadRequestDto: { type: "" },
+
     };
   },
   components: {
@@ -56,7 +58,9 @@ export default {
         this.pendingRequests = response.data;
       });
     },
-    friendRequestList() {
+    friendRequestList(type) {
+      this.notificationReadRequestDto.type = type;
+      NotificationService.markAsRead(this.notificationReadRequestDto);
       this.$router.push({ name: "friend-requests" });
     },
 
