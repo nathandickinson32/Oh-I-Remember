@@ -98,6 +98,8 @@ export default {
         );
         return;
       }
+      
+
       FriendService.submitFriendRequest(this.receiverId)
         .then((response) => {
           if (response.status === 200) {

@@ -9,7 +9,7 @@ SELECT * FROM notifications;
 
 SELECT COUNT(*) FROM notifications WHERE user_id = 3 AND type = 'friend_request'
 SELECT COUNT(*) FROM notifications WHERE user_id = 3 AND type = 'new_question';
-
+SELECT COUNT(*) FROM notifications WHERE user_id = 5 AND type = 'new_friend' AND is_read = false;
 SELECT message FROM messages WHERE room_id = 1 ORDER BY created_at DESC;
 SELECT room_members.user_id FROM users JOIN room_members ON users.user_id = room_members.user_id WHERE room_members.room_id = 1;
 SELECT room_members.user_id FROM users JOIN room_members ON users.user_id = room_members.user_id WHERE room_members.room_id = 3;
@@ -25,6 +25,7 @@ INSERT INTO questions(room_id, sender_id, receiver_id, question) VALUES(1,1,3,'I
 INSERT INTO questions(room_id, sender_id, receiver_id, question) VALUES(1,3,2,'Is this the fifth question?');
 INSERT INTO questions(room_id, sender_id, receiver_id, question) VALUES(1,3,1,'Is this the sixth question?');
 UPDATE questions SET is_answered = true WHERE question_id = 6
+UPDATE notifications SET is_read = true WHERE user_id = 3 AND type = 'answer_response';
 
 INSERT INTO friends(user_id1,user_id2, created_at) VALUES (3,4,'2025-01-10 09:00:00');
 
