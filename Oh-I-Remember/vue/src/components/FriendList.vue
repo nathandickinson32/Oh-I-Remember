@@ -9,7 +9,7 @@
       <button @click="submitFriendRequest">Submit</button>
     </div>
 
-    <button @click="friendRequestList('friend_request')">Friend Requests: {{ this.notificationCount }}     </button>
+    <button @click="friendRequestList('friend_request')">Friend Requests:<span v-if="this.notificationCount>0">{{ this.notificationCount }}</span>    </button>
     <div class="friend-list" v-if="friendsList.length === 0">
       <h4>Be sure to add friends!</h4>
     </div>

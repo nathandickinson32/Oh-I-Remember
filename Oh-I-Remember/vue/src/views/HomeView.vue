@@ -4,19 +4,19 @@
     <br />
     <div class="small-container" id="home-title">
       <router-link @click="markAsRead('new_question')" v-bind:to="{ name: 'questions' }"
-        >I Remember! {{ this.questionNotificationCount }}</router-link
+        >I Remember! <span v-if="this.questionNotificationCount>0">{{ this.questionNotificationCount }}</span></router-link
       >
     </div>
     <br />
     <div class="small-container" id="home-title">
       <router-link @click="markAsRead('answer_response')" v-bind:to="{ name: 'do-you-remember' }"
-        >Do You Remember? {{ this.answerNotificationCount }}</router-link
+        >Do You Remember?<span v-if="this.answerNotificationCount>0">{{ this.answerNotificationCount }}</span></router-link
       >
     </div>
     <br />
     <div class="small-container" id="home-title">
       <router-link @click="markAsRead('new_friend')" v-bind:to="{ name: 'friends-list' }"
-        >Friends List {{ this.newFriendNotificationCount }}</router-link
+        >Friends List <span v-if="this.newFriendNotificationCount>0">{{ this.newFriendNotificationCount }}</span></router-link
       >
     </div>
   </div>
