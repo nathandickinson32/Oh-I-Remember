@@ -47,7 +47,7 @@ export default {
   },
   methods: {
     getNotificationCount(){
-      NotificationService.getNumberOfQuestionNotifications().then((response) =>{
+      NotificationService.getNumberOfFriendRequestNotifications().then((response) =>{
         this.notificationCount = response.data;
       })
     },

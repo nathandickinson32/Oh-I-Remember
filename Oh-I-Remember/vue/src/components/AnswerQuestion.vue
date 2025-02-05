@@ -1,7 +1,6 @@
 <template>
     <div class="small-container">
       <span>{{ senderUserName }} asked you: </span><br />
-
       {{ question.question }}<br />
       <label id="answer-title">Answer:</label><br/>
 
@@ -22,7 +21,8 @@ export default {
     return {
         answerDto:{
           questionId: "",
-          answer: ""
+          answer: "",
+          senderId: ""
         }
     }
   },
@@ -39,6 +39,7 @@ export default {
   methods: {
     answerQuestion(){
       this.answerDto.questionId=this.question.questionId;
+      this.answerDto.senderId=this.question.senderId;
         QuestionService.answerQuestion(this.answerDto)
         .then(
           (response) => {

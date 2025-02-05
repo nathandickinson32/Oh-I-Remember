@@ -3,6 +3,15 @@ package com.techelevator.model;
 public class AnswerDto {
     private int questionId;
     private String answer;
+    private int senderId;
+
+    public int getSenderId() {
+        return senderId;
+    }
+
+    public void setSenderId(int senderId) {
+        this.senderId = senderId;
+    }
 
     public int getQuestionId() {
         return questionId;

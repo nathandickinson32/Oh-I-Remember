@@ -85,7 +85,7 @@ FOREIGN KEY (user_id2) REFERENCES users(user_id)
 CREATE TABLE notifications (
 notification_id SERIAL PRIMARY KEY,
 user_id INT NOT NULL,
-type VARCHAR(50) NOT NULL CHECK (type IN ('new_question', 'friend_request')),
+type VARCHAR(50) NOT NULL CHECK (type IN ('new_question', 'friend_request', 'answer_response', 'new_friend')),
 reference_id INT NOT NULL,
 is_read BOOLEAN NOT NULL,
 created_at TIMESTAMP,

@@ -12,6 +12,8 @@ public interface NotificationDao {
 
     //READ
     public int numberOfQuestionNotifications(int userId);
+    public int numberOfNewAnswerResponseNotifications(int userId);
+    public int numberOfNewFriendsNotifications(int userId);
     public int numberOfFriendRequestNotifications(int userId);
 
 

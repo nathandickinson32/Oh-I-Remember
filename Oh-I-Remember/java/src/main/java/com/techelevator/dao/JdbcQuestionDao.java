@@ -126,6 +126,11 @@ public class JdbcQuestionDao implements QuestionDao{
         } catch (DataIntegrityViolationException e){
             throw new DataIntegrityViolationException("[JDBC Question DAO] Unable to create a new Question.");
         }
+        CreateNotificationDto createNotificationDto = new CreateNotificationDto();
+        createNotificationDto.setUserId(answerDto.getSenderId());
+        createNotificationDto.setType("answer_response");
+        createNotificationDto.setReferenceId(answerDto.getQuestionId());
+        notificationDao.createNotification(createNotificationDto);
         return getQuestionById(answerDto.getQuestionId());
     }
     @Override

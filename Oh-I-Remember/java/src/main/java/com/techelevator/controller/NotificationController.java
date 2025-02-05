@@ -30,4 +30,22 @@ public class NotificationController {
         System.out.println(LocalDateTime.now() + "Retrieved question notifications for User: " + principal.getName());
         return notificationDao.numberOfQuestionNotifications(userId);
     }
+    @GetMapping(path = "/answer-notifications")
+    public int numberOfNewAnswerNotifications(Principal principal) {
+        int userId = userDao.getUserIdByUsername(principal.getName());
+        System.out.println(LocalDateTime.now() + "Retrieved new answer notifications for User: " + principal.getName());
+        return notificationDao.numberOfNewAnswerResponseNotifications(userId);
+    }
+    @GetMapping(path = "/new-friends-notifications")
+    public int numberOfNewFriendRequestsNotifications(Principal principal) {
+        int userId = userDao.getUserIdByUsername(principal.getName());
+        System.out.println(LocalDateTime.now() + "Retrieved new friend notifications for User: " + principal.getName());
+        return notificationDao.numberOfNewFriendsNotifications(userId);
+    }
+    @GetMapping(path = "/friend-request-notifications")
+    public int numberOfFriendRequestNotifications(Principal principal) {
+        int userId = userDao.getUserIdByUsername(principal.getName());
+        System.out.println(LocalDateTime.now() + "Retrieved Friend Request notifications for User: " + principal.getName());
+        return notificationDao.numberOfFriendRequestNotifications(userId);
+    }
 }

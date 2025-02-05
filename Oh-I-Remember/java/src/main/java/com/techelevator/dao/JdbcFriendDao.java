@@ -68,6 +68,11 @@ public class JdbcFriendDao implements FriendDao {
         } catch (DataIntegrityViolationException e){
             throw new DataIntegrityViolationException("[JDBC Friendship Request DAO] Unable to create a new Friendship.");
         }
+        CreateNotificationDto createNotificationDto = new CreateNotificationDto();
+        createNotificationDto.setUserId(createFriendshipDto.getUserId1());
+        createNotificationDto.setType("new_friend");
+        createNotificationDto.setReferenceId(friendshipId);
+        notificationDao.createNotification(createNotificationDto);
 
     }
 
