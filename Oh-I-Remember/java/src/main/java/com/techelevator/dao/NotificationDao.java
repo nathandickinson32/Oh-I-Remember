@@ -11,7 +11,8 @@ public interface NotificationDao {
     public Notification createNotification(CreateNotificationDto createNotificationDto);
 
     //READ
-    public List<Notification> getMessageNotifications(int userId);
+    public int numberOfQuestionNotifications(int userId);
+    public int numberOfFriendRequestNotifications(int userId);
 
 
     //UPDATE

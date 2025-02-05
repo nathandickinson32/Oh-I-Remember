@@ -2,7 +2,7 @@
   <div class="content">
     <h4>Welcome, {{ $store.state.user.firstName }}!</h4><br/>
     <div class="small-container" id="home-title">
-      <router-link v-bind:to="{ name: 'questions' }">I Remember!</router-link>
+      <router-link v-bind:to="{ name: 'questions' }">I Remember! {{ this.questionNotificationCount }}</router-link>
     </div>
     <br/>
     <div class="small-container" id="home-title">
@@ -22,7 +22,25 @@
 </template>
 
 <script>
+import NotificationService from "../services/NotificationService";
+
 export default {
+  data(){
+    return{
+      questionNotificationCount: "",
+    }
+  },
+  created(){
+    this.getNumberOfQuestionNotifications();
+
+  },
+  methods: {
+    getNumberOfQuestionNotifications() {
+        NotificationService.getNumberOfQuestionNotifications().then((response) => {
+          this.questionNotificationCount = response.data;
+        })
+    },
+  }
 };
 </script>
 <style scoped>

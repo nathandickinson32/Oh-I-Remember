@@ -2,6 +2,7 @@ package com.techelevator.dao;
 
 import com.techelevator.model.*;
 import com.techelevator.model.user.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -18,7 +19,8 @@ import java.util.List;
 public class JdbcFriendDao implements FriendDao {
     private JdbcTemplate template;
     JdbcFriendDao(DataSource ds){template = new JdbcTemplate(ds);}
-
+    @Autowired
+    NotificationDao notificationDao;
     //CREATE
     @Override
     public FriendRequest createFriendRequest(CreateFriendRequestDto createFriendRequestDto, int userId) {
@@ -40,6 +42,11 @@ public class JdbcFriendDao implements FriendDao {
         } catch (DataIntegrityViolationException e){
             throw new DataIntegrityViolationException("[JDBC Friend Request DAO] Unable to create a new Friend Request.");
         }
+        CreateNotificationDto createNotificationDto = new CreateNotificationDto();
+        createNotificationDto.setUserId(createFriendRequestDto.getReceiverId());
+        createNotificationDto.setType("friend_request");
+        createNotificationDto.setReferenceId(requestId);
+        notificationDao.createNotification(createNotificationDto);
         return getFriendRequestById(requestId);
     }
 

@@ -9,7 +9,7 @@
       <button @click="submitFriendRequest">Submit</button>
     </div>
 
-    <button @click="friendRequestList">Friend Requests</button>
+    <button @click="friendRequestList">Friend Requests: {{ this.notificationCount }}     </button>
     <div class="friend-list" v-if="friendsList.length === 0">
       <h4>Be sure to add friends!</h4>
     </div>
@@ -26,6 +26,7 @@
 <script>
 import FriendService from "../services/FriendService";
 import Friend from "../components/Friend.vue";
+import NotificationService from "../services/NotificationService";
 export default {
   data() {
     return {
@@ -33,6 +34,7 @@ export default {
       pendingRequests: [],
       addFriend: false,
       receiverId: "",
+      notificationCount: ""
     };
   },
   components: {
@@ -41,8 +43,14 @@ export default {
   created() {
     this.getFriends();
     this.getPendingRequests();
+    this.getNotificationCount();
   },
   methods: {
+    getNotificationCount(){
+      NotificationService.getNumberOfQuestionNotifications().then((response) =>{
+        this.notificationCount = response.data;
+      })
+    },
     getPendingRequests() {
       FriendService.getFriendRequestsByUserId().then((response) => {
         this.pendingRequests = response.data;

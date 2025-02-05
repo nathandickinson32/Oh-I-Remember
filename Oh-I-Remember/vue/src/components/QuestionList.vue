@@ -49,6 +49,7 @@ export default {
     this.getQuestions();
   },
   methods: {
+  
     getQuestions() {
       QuestionService.getQuestionsByReceiverId().then((response) => {
         this.questions = response.data;

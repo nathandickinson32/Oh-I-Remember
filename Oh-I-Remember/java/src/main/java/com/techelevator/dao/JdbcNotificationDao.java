@@ -51,8 +51,21 @@ public class JdbcNotificationDao implements NotificationDao {
     ///READ
 
     @Override
-    public List<Notification> getMessageNotifications(int userId) {
-        return List.of();
+    public int numberOfQuestionNotifications(int userId) {
+        int numberOfNotifications = -1;
+        String sql = "SELECT COUNT(*) FROM notifications WHERE user_id = ? AND type = 'new_question';";
+        try {
+            numberOfNotifications = template.queryForObject(sql, Integer.class, userId);
+        }catch (CannotGetJdbcConnectionException e){
+            throw new CannotGetJdbcConnectionException("[JDBC Notification DAO] Unable to connect to the database.");
+        } catch (DataIntegrityViolationException e){
+            throw new DataIntegrityViolationException("[JDBC Notification DAO] Unable to retrieve new question Notification by id: " + userId);
+        }
+        return numberOfNotifications;
+    }
+
+    public int numberOfFriendRequestNotifications(int userId){
+        return 0;
     }
 
     public Notification getNotificationById(int id) {
