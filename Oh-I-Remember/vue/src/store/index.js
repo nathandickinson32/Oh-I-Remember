@@ -29,6 +29,9 @@ export function createStore(currentToken, currentUser) {
       loggedInUserId(state) {
         return state.user.id;
       },
+      loggedInUserName(state) {
+        return state.user.username;
+      },
       // check if someone is logged in
       isLoggedIn(state){
         return !!state.token;

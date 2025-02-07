@@ -37,6 +37,13 @@ public class FriendController {
         try {
             int userId = userDao.getUserIdByUsername(principal.getName());
 
+            // Check if the username exists before proceeding
+            boolean userExists = userDao.doesUserExist(createFriendRequestDto.getUserName());
+            if (!userExists) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body(Collections.singletonMap("message", "The username does not exist."));
+            }
+
             boolean exists = friendDao.checkPendingRequest(userId, createFriendRequestDto.getUserName());
             if (exists) {
                 return ResponseEntity.status(HttpStatus.CONFLICT)
@@ -55,13 +62,14 @@ public class FriendController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(Collections.singletonMap("message", "Database connection issue. Please try again later."));
         } catch (DataIntegrityViolationException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(Collections.singletonMap("message", "Please make sure you entered a valid ID"));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(Collections.singletonMap("message", "Invalid username provided."));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(Collections.singletonMap("message", "An error occurred while processing the request."));
         }
     }
+
 
     //READ
     @GetMapping(path = "/friends-list")

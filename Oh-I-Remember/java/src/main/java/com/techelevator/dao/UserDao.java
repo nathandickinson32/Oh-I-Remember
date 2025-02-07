@@ -12,7 +12,7 @@ public interface UserDao {
     User getUserById(int id);
 
     User getUserByUsername(String username);
-
+    public boolean doesUserExist(String username);
     User createUser(RegisterUserDto user);
     public int getUserIdByUsername(String username);
 }

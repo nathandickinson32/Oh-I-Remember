@@ -1,6 +1,7 @@
 package com.techelevator.controller;
 
 import com.techelevator.dao.UserDao;
+import com.techelevator.model.CreateFriendRequestDto;
 import com.techelevator.model.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -25,6 +26,11 @@ public class UserController {
     public User getUser(Principal principal){
         System.out.println(LocalDateTime.now() + " git [User Controller] Accessing user " + principal.getName());
         return userDao.getUserByUsername(principal.getName());
+    }
+    @GetMapping(path = "/get-user-by-username")
+    public int getUser(CreateFriendRequestDto createFriendRequestDto, Principal principal){
+        System.out.println(LocalDateTime.now() + " git [User Controller] Accessing user " + createFriendRequestDto.getUserName());
+        return userDao.getUserIdByUsername(createFriendRequestDto.getUserName());
     }
 
     @GetMapping(path = "/get-user/{id}")

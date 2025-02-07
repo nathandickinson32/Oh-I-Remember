@@ -2,8 +2,8 @@ import axios from "axios";
 
 export default {
     //CREATE
-    submitFriendRequest(receiverId) {
-        return axios.post('/friends/friend-request', { receiverId });
+    submitFriendRequest(userName) {
+        return axios.post('/friends/friend-request', { userName });
     },
 
 
@@ -18,6 +18,10 @@ export default {
 
     getUserInfo(userIds){
         return axios.post('/friends/user-info', userIds)
+    },
+
+    getUserInfoByUsername(username){
+        return axios.post('/get-user-by-username', username)
     },
 
     //UPDATE
