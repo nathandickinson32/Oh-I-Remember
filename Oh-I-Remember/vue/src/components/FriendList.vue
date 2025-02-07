@@ -69,12 +69,13 @@ export default {
 
   const loggedInUserId = this.$store.getters.loggedInUserId;
 
+
   if (this.userName === this.$store.getters.loggedInUserName) {
     window.alert("You cannot send a request to yourself.");
     return;
   }
 
-  if (this.friendsList.some((friend) => friend.userName === this.userName)) {
+  if (this.friendsList.some((friend) => friend.username === this.userName)) {
     window.alert("You are already friends with this user.");
     return;
   }
