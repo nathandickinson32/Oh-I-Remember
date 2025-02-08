@@ -6,7 +6,7 @@
       >
       <span class="seperator"> | </span>
       <label @click="showAnsweredQuestions" class="clickable-label"
-        >answered</label
+        >Answered</label
       >
     </div>
     <div clas="question-list" v-if="filteredQuestions.length === 0">

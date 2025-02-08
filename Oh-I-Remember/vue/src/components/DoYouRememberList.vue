@@ -4,7 +4,7 @@
     <div class="filter-section">
         <label @click="showUnAnsweredQuestions" class="clickable-label">Unanswered</label>
         <span class="seperator"> | </span>
-        <label @click="showAnsweredQuestions" class="clickable-label">answered</label>
+        <label @click="showAnsweredQuestions" class="clickable-label">Answered</label>
 
     </div>
     <div class="question-list" v-if="filteredQuestions.length === 0">
