@@ -10,7 +10,7 @@
 
   <button @click="friendRequestList('friend_request')">
     Friend Requests<span v-if="this.notificationCount > 0"
-      >: {{ this.notificationCount }}</span
+      >{{ this.notificationCount }}</span
     >
   </button>
   <div class="friend-list" v-if="friendsList.length === 0">
@@ -158,5 +158,13 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+button span{
+  font-size: 14px;
+  background-color: #4a6fa5; 
+  color: white;
+  padding: 2px 6px;
+  border-radius: 50%;
+  margin-left: 10px;
+}
 </style>
