@@ -1,7 +1,5 @@
 <template>
-  <div class="content">
 <edit-my-question :question="question" :receiverUserName="receiverUserName"></edit-my-question>
-  </div>
 </template>
 
 <script>

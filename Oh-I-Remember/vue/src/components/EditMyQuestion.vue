@@ -1,6 +1,7 @@
 <template>
   <div class="content">
-    <div class="large-container">
+    <h1>Edit Question</h1>
+    <div class="form-container">
         {{ question.question }}
         <form id="question-form" @submit.prevent="updateQuestion">
             <div class="form-input-group">
@@ -52,13 +53,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 
-#question {
-  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
-  width: 100%;
-  height: 10em;
-  resize: none;
-  border-radius: 5px;
-}
+
 </style>

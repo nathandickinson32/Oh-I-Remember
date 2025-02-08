@@ -1,7 +1,6 @@
 <template>
-  <div class="content">
+  
 <answer-question :question="question" :senderUserName="senderUserName"></answer-question>
-  </div>
 </template>
 
 <script>

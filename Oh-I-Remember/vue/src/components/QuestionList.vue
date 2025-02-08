@@ -1,5 +1,5 @@
 <template>
-  <div class="content">
+ 
     <div class="filter-section">
       <label @click="showUnAnsweredQuestions" class="clickable-label"
         >Unanswered</label
@@ -19,7 +19,7 @@
         :question="question"
       ></question>
     </div>
-  </div>
+ 
 </template>
 
 <script>
@@ -65,18 +65,6 @@ export default {
 };
 </script>
 
-<style scoped>
-.content {
-  flex-direction: column;
-  width: 100%;
-  box-sizing: border-box;
-  gap: 10px;
-}
-.question-list {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  width: 100%;
-}
+<style>
+
 </style>

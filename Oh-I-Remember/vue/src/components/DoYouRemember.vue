@@ -1,24 +1,24 @@
 <template>
-  <div class="content">
-    <div class="small-container">
-      {{ question.question }}<br />
-      <span class="label">You asked: </span>
-      {{ question.receiverUserName }}
-      <div v-if="question.answered === true">
-        {{ question.answer }}
-      </div>
-      <button v-if="question.answered === false" @click="editQuestion">
-        Edit Question
-      </button>
-      <button @click="showModal">Delete Question</button>
-      <message-modal
-        :message="message"
-        :type="type"
-        v-if="isModalVisible"
-        @cancelModal="cancelModal"
-        @deleteModal="deleteModal"
-      />
+  <div class="card">
+    <strong>You asked: {{ question.receiverUserName }}</strong>
+   <p>{{ question.question }}</p> 
+    
+
+    <div v-if="question.answered">
+      <strong>{{ question.receiverUserName }} Answered:</strong>
+      <p>{{ question.answer }}</p>
     </div>
+    <button v-if="question.answered === false" @click="editQuestion">
+      Edit Question
+    </button>
+    <button @click="showModal">Delete Question</button>
+    <message-modal
+      :message="message"
+      :type="type"
+      v-if="isModalVisible"
+      @cancelModal="cancelModal"
+      @deleteModal="deleteModal"
+    />
   </div>
 </template>
 

@@ -1,7 +1,7 @@
 <template>
   <div class="content">
-    <h3>What Would you like to ask?</h3>
-    <div class="document-container">
+    <h1>Ask A New Question</h1>
+    <div class="form-container">
       <form id="question-form" @submit.prevent="askQuestion">
         <label for="friend-id">Select Friend</label>
         <select name="friend-id" id="friend-id" v-model="askQuestionDto.receiverId" :value="askQuestionDto.receiverId" required>
@@ -53,5 +53,7 @@ export default {
 };
 </script>
   
-  <style>
+  <style >
+
+
 </style>

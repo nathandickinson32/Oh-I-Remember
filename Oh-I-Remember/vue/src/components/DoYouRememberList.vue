@@ -1,5 +1,5 @@
 <template>
-  <div class="content">
+ 
     <button @click="askQuestion">Ask New Question</button>
     <div class="filter-section">
         <label @click="showUnAnsweredQuestions" class="clickable-label">Unanswered</label>
@@ -19,7 +19,7 @@
         :question="question"
       ></do-you-remember>
     </div>
-  </div>
+
 </template>
 
 <script>
@@ -39,7 +39,7 @@ export default {
   data() {
     return {
       questions: [],
-      filterType: "unanswered",
+      filterType: "answered",
     };
   },
 

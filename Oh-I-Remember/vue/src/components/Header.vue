@@ -29,28 +29,6 @@ export default {
 };
 </script>
 
-<style scoped>
-.logo {
-  width: 200px;
-  height: auto;
-}
+<style>
 
-#header {
-  display: flex;
-  background-color: white;
-  justify-content: center;
-  margin: 0 auto;
-}
-
-#nav {
-  margin: 10px;
-  width: auto;
-  text-align: center;
-}
-@media (max-width: 768px) {
-  .logo {
-    width: 175px;
-    height: auto;
-  }
-}
 </style>

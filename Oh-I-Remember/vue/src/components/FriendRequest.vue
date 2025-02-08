@@ -1,6 +1,6 @@
 <template>
-  <div class="content">
-    <div class="small-container">
+  
+    <div class="friend-card">
       <div class="sent-list" v-if="this.friendRequest.senderId===this.$store.getters.loggedInUserId">
         {{ friendRequest.receiver.firstName }} {{ friendRequest.receiver.lastName }}
         <button @click="cancelRequest">Cancel</button>
@@ -17,7 +17,7 @@
         <button @click="denyRequest">Deny</button>
       </div>
     </div>
-  </div>
+
 </template>
 
 <script>

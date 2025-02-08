@@ -1,17 +1,21 @@
 <template>
-    <div class="small-container">
+  <div class="content">
+    <h1>Answer Question</h1>
       <span>{{ senderUserName }} asked you: </span><br />
       {{ question.question }}<br />
       <label id="answer-title">Answer:</label><br/>
 
-      <form id="answer-form" @submit.prevent="answerQuestion">
-          <div class="form-input-group">
-            <input type="text" v-model="answerDto.answer" id="answer" required/>
-          </div>
-          <button type="submit">Answer Question</button>
-      </form>
-    </div>
+      <div class="form-container"> 
+          <form id="answer-form" @submit.prevent="answerQuestion">
+              <div class="form-input-group">
+                  <input type="text" v-model="answerDto.answer" id="answer" required />
+              </div>
+              <button type="submit">Answer Question</button>
+          </form>
+      </div>
+  </div>
 </template>
+
 
 <script>
 import QuestionService from "../services/QuestionService";
@@ -56,12 +60,7 @@ export default {
 };
 </script>
 
-<style scoped>
-#answer {
-  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
-  width: 100%;
-  height: 10em;
-  resize: none;
-  border-radius: 5px;
-}
+<style>
+
+
 </style>

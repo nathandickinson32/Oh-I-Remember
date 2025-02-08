@@ -1,14 +1,14 @@
 <template>
-  <div class="content">
-    <div class="small-container">
-      <h3>{{ question.question }}</h3>
-      <span>Asked By: <h5>{{ question.senderUserName }}</h5></span>
-      <div v-if="question.answered===true">
-         You answered:<br/> {{ question.answer }}
-        </div>
-        <button v-if="question.answered===false" @click="answerQuestion">Answer Question</button>
-
+  <div class="card">
+    <h3>{{ question.question }}</h3>
+    <p class="user-info">Asked By: {{ question.senderUserName }}</p>
+    <div v-if="question.answered">
+      <strong>You answered:</strong>
+      <p>{{ question.answer }}</p>
     </div>
+    <button v-if="question.answered === false" @click="answerQuestion">
+      Answer Question
+    </button>
   </div>
 </template>
 
@@ -27,10 +27,11 @@ export default {
     this.getUser(this.question);
   },
   methods: {
-    
-    answerQuestion(){
-        this.$router.push({ name: "answer-question", params: {questionId: this.question.questionId} });
-
+    answerQuestion() {
+      this.$router.push({
+        name: "answer-question",
+        params: { questionId: this.question.questionId },
+      });
     },
     getUser(question) {
       QuestionService.getUserById(question.senderId).then((response) => {
