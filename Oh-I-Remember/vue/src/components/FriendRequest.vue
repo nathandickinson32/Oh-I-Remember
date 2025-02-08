@@ -85,5 +85,10 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+@media (min-width: 768px) {
+ button{
+   margin-left: 25px;
+  }
+}
 </style>

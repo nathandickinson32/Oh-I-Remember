@@ -1,5 +1,6 @@
 <template>
   <div class="content">
+    <h1>Friend Requests</h1>
     <div class="filter-section">
       <label class="clickable-label" @click="showSentRequests">Sent</label>
       <span class="seperator"> | </span>
@@ -68,5 +69,6 @@ export default {
 </script>
   
   <style>
+ 
 </style>
   

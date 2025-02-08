@@ -59,87 +59,112 @@
   </script>
   
   <style scoped>
-  .modal-backdrop {
+/* Modal Backdrop (Overlay) */
+.modal-backdrop {
     position: fixed;
     top: 0;
-    bottom: 0;
     left: 0;
-    right: 0;
-    background-color: rgba(0, 0, 0, 0.3);
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
     display: flex;
     justify-content: center;
     align-items: center;
-  }
-  
-  .modal {
-    background: #ffffff;
-    box-shadow: 2px 2px 20px 1px;
-    overflow-x: auto;
+    z-index: 1000;
+}
+
+/* Modal Box */
+.modal {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 600px;
+    padding: 20px;
+}
+
+/* Modal Content */
+.modal-content {
     display: flex;
     flex-direction: column;
-    height: 15rem;
-    width: 20rem;
-    margin: auto;
-  }
-  
-  .modal-content {
+}
+
+/* Header */
+.modal-header {
+    font-size: 22px;
+    font-weight: bold;
+    color: #444;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+/* Body */
+.modal-body {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.prompt {
+    font-size: 18px;
+    color: #444;
+}
+
+/* Footer */
+.modal-footer {
     display: flex;
-    flex-direction: column;
-    height: 40%;
-  }
-  
- 
-  
-  .modal-header {
-    position: relative;
-    top: 1rem;
-    border-bottom: 1px solid #eeeeee;
-    color: #4aae9b;
     justify-content: center;
-    align-items: flex-start;
-    width: 70%;
-    margin: auto;
-  }
-  
- 
-  
-  .modal-body {
-    position: relative;
-    padding: 20px 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 80%;
-  }
-  
-  .prompt {
-    margin-top: 10px;
-  }
-  
- 
-  
- 
-  
-  .btn-green {
+    gap: 15px;
+    margin-top: 20px;
+}
+
+/* Buttons */
+#btn-container button {
+    background-color: #ffb74d; /* Button color matching theme */
     color: white;
-    background: #4aae9b;
-    border: 1px solid #4aae9b;
-    border-radius: 2px;
+    border: none;
+    padding: 12px 18px;
+    font-size: 18px;
+    border-radius: 8px;
     cursor: pointer;
-    width: fit-content;
-    margin-top: 10px;
-  }
-  
-  .btn-disabled {
-    color: rgba(255, 255, 255, 0.822);
-    background: #4aae9c54;
-    border: 1px solid #4aae9b;
-    border-radius: 2px;
-    cursor: pointer;
-    width: fit-content;
-  }
-  
+    transition: background 0.3s ease;
+}
+
+#btn-container button:hover {
+    background-color: #ff9800; /* Darker button color on hover */
+}
+
+#btn-container button:focus {
+    outline: none;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+    .modal {
+        width: 90%;
+        padding: 15px;
+    }
+
+    .modal-header {
+        font-size: 20px;
+    }
+
+    .modal-body {
+        font-size: 14px;
+    }
+
+    .modal-footer {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #btn-container button {
+        width: 100%;
+        font-size: 16px;
+        margin-top: 10px;
+    }
+}
 
   </style>
   
