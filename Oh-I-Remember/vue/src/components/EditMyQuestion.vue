@@ -1,6 +1,6 @@
 <template>
   <div class="content">
-    <h1>Edit Question</h1>
+    <h1>Edit Question to {{ receiverUserName }}</h1>
     <div class="form-container">
         {{ question.question }}
         <form id="question-form" @submit.prevent="updateQuestion">
