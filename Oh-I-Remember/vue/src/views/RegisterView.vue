@@ -1,6 +1,6 @@
 <template>
   <div class="content">
-    <div id="register" class="small-container">
+    <div id="register" class="form-container">
     <form v-on:submit.prevent="register">
       <h1>Create Account</h1>
       <div role="alert" v-if="registrationErrors">
