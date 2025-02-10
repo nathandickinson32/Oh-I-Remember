@@ -20,4 +20,7 @@ INSERT INTO friend_requests (sender_id, receiver_id, status_id, created_at) VALU
 
 INSERT INTO notifications (user_id, type, reference_id, is_read, created_at) VALUES (2, 'new_question', 1, false, '2025-01-10 09:01:00');
 
+INSERT INTO categories(category_name) VALUES('Family & Friends'), ('Events & Travel'), ('Home & Organization'), ('Health & Wellness'), ('Hobbies & Interests'), ('Shopping & Wishlist'), ('Recipes & Food'), ('Tech & Troubleshooting'), ('Random Thoughts & Ideas'), ('Quotes & Fun Facts');
+
+INSERT INTO question_categories(question_id, category_id) VALUES(1,1);
 COMMIT TRANSACTION;

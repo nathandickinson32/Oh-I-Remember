@@ -9,6 +9,7 @@ DROP TABLE IF EXISTS statuses;
 DROP TABLE IF EXISTS friend_requests;
 DROP TABLE IF EXISTS friends;
 DROP TABLE IF EXISTS notifications;
+DROP TABLE IF EXISTS categories;
 
 CREATE TABLE users (
 	user_id SERIAL,
@@ -91,5 +92,18 @@ is_read BOOLEAN NOT NULL,
 created_at TIMESTAMP,
 FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
+
+CREATE TABLE categories (
+category_id SERIAL PRIMARY KEY,
+category_name varchar NOT NULL UNIQUE
+);
+
+CREATE TABLE question_categories(
+question_id INT NOT NULL,
+category_id INT NOT NULL,
+FOREIGN KEY (question_id) REFERENCES questions (question_id),
+FOREIGN KEY (category_id) REFERENCES categories (category_id)
+);
+
 
 COMMIT TRANSACTION;
