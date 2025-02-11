@@ -10,7 +10,22 @@
                 {{ friend.firstName }} {{ friend.lastName }}
             </option>
         </select>
-        <input type="text" v-model="askQuestionDto.question" required />
+
+      <label for="question">Enter your question</label>
+        <input id="question" type="text" v-model="askQuestionDto.question" required />
+
+        <label for="categories">Select all categories that apply</label>
+<multiselect
+  v-model="askQuestionDto.categoryIds"
+  :options="categoryList"
+  label="categoryName"
+  track-by="categoryId"
+  :multiple="true"
+  placeholder="Search Categories"
+  id="categories"
+/>
+
+
         <button type="submit">Submit</button>
       </form>
     </div>
@@ -18,26 +33,36 @@
 </template>
   
   <script>
+  import Multiselect from "vue-multiselect";
+import CategoryService from "../services/CategoryService";
 import QuestionService from "../services/QuestionService";
 import FriendService from "../services/FriendService";
 export default {
+  components: {
+    Multiselect
+  },
   data() {
     return {
       askQuestionDto: {
         receiverId: "",
         question: "",
+        categoryIds: []
       },
       friendsList: [],
+      categoryList: []
     };
   },
   created() {
     this.getFriends();
+    this.getAllCategories();
   },
   methods: {
     askQuestion() {
+      this.askQuestionDto.categoryIds = this.askQuestionDto.categoryIds.map((category) => category.categoryId)
       QuestionService.askQuestionByReceiverId(this.askQuestionDto).then(
         (response) => {
           if (response.status === 201) {
+            console.log(this.askQuestionDto);
             window.alert("Success!");
             this.$router.push({ name: "do-you-remember" });
           }
@@ -49,11 +74,18 @@ export default {
         this.friendsList = response.data;
       });
     },
+    getAllCategories(){
+      CategoryService.getAllCategories().then((response) => {
+        console.log(response.data)
+        this.categoryList = response.data;
+      })
+    },
   },
 };
 </script>
   
   <style >
+
 
 
 </style>

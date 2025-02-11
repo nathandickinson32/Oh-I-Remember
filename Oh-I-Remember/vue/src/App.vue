@@ -6,6 +6,7 @@
 </template>
 
 <script>
+import 'vue-multiselect/dist/vue-multiselect.min.css';
 import Header from './components/Header.vue';
 export default {
 components: {
