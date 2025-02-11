@@ -6,7 +6,9 @@ SELECT * FROM friend_requests;
 SELECT * FROM friends;
 SELECT * FROM questions;
 SELECT * FROM notifications;
+SELECT * FROM question_categories;
 
+SELECT * FROM questions WHERE sender_id = 3 OR receiver_id = 3 AND is_answered = true
 SELECT COUNT(*) FROM notifications WHERE user_id = 3 AND type = 'friend_request'
 SELECT COUNT(*) FROM notifications WHERE user_id = 3 AND type = 'new_question';
 SELECT COUNT(*) FROM notifications WHERE user_id = 5 AND type = 'new_friend' AND is_read = false;
