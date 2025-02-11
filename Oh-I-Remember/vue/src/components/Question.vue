@@ -1,11 +1,22 @@
 <template>
   <div class="card">
     <h3>{{ question.question }}</h3>
+   
+
     <p class="user-info">Asked By: {{ question.senderUserName }}</p>
     <div v-if="question.answered">
       <strong>You answered:</strong>
+
       <p>{{ question.answer }}</p>
     </div>
+
+    <div
+      class="question-category-list"
+      v-for="category in question.categories"
+      v-bind:key="category.categoryId"
+    >
+      {{ category.categoryName }}
+    </div><br/>
     <button v-if="question.answered === false" @click="answerQuestion">
       Answer Question
     </button>

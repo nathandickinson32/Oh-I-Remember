@@ -2,12 +2,18 @@
   <div class="card">
     <strong>You asked: {{ question.receiverUserName }}</strong>
    <p>{{ question.question }}</p> 
-    
 
     <div v-if="question.answered">
       <strong>{{ question.receiverUserName }} Answered:</strong>
       <p>{{ question.answer }}</p>
     </div>
+    <div
+      class="question-category-list"
+      v-for="category in question.categories"
+      v-bind:key="category.categoryId"
+    >
+      {{ category.categoryName }}
+    </div><br/>
     <button v-if="question.answered === false" @click="editQuestion">
       Edit Question
     </button>

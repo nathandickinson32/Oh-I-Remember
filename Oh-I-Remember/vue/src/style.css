@@ -206,6 +206,27 @@ form button:hover {
     flex-direction: column;
     gap: 10px;
 }
+.question-category-list {
+    display: inline-block;
+    background-color: #f1f1f1;
+    color: #555;
+    padding: 6px 12px;
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-bottom: 5px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    box-sizing: border-box;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.question-category-list:hover {
+    background-color: #4a6fa5;
+    color: white;
+}
+
 
 @media (max-width: 768px) {
     .content {
