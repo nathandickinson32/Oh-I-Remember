@@ -16,6 +16,7 @@ public interface QuestionDao {
     public Question getQuestionById(int questionId);
     public List<Question> getQuestionsByReceiverId(int receiverId);
     public List<Question> getQuestionsBySenderId(int senderId);
+    public List<Question> getQuestionsByUserId(int userId);
 
 
     //UPDATE

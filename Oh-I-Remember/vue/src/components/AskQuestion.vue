@@ -33,7 +33,7 @@
 </template>
   
   <script>
-  import Multiselect from "vue-multiselect";
+import Multiselect from "vue-multiselect";
 import CategoryService from "../services/CategoryService";
 import QuestionService from "../services/QuestionService";
 import FriendService from "../services/FriendService";
@@ -76,7 +76,6 @@ export default {
     },
     getAllCategories(){
       CategoryService.getAllCategories().then((response) => {
-        console.log(response.data)
         this.categoryList = response.data;
       })
     },

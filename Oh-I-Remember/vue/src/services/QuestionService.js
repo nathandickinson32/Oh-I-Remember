@@ -14,6 +14,9 @@ export default{
     getQuestionsBySenderId(){
         return axios.get('/questions/do-you-remember');
     },
+    getQuestionsByUserId(){
+        return axios.get('/questions/questions-by-user-id');
+    },
     getQuestionByQuestionId(questionId){
         return axios.get(`/questions/question-id/${questionId}`);
     },
