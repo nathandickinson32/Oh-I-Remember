@@ -1,7 +1,11 @@
 package com.techelevator.model;
 
+import jdk.dynalink.linker.LinkerServices;
+
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Question {
     private int questionId;
@@ -12,7 +16,7 @@ public class Question {
     private boolean isAnswered;
     private LocalDateTime createdAt;
     private LocalDateTime answeredAt;
-
+    private List<Category> categories = new ArrayList<>();
     public int getQuestionId() {
         return questionId;
     }
@@ -77,5 +81,13 @@ public class Question {
 
     public void setAnsweredAt(LocalDateTime answeredAt) {
         this.answeredAt = answeredAt;
+    }
+
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
     }
 }

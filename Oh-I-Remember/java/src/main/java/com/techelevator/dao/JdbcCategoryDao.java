@@ -35,6 +35,24 @@ public class JdbcCategoryDao implements CategoryDao {
         return categoryList;
     }
 
+    public List<Category> getAllCategoriesByQuestionId(int questionId) {
+        List<Category> categoryList = new ArrayList<>();
+        String sql = "SELECT c.category_id, c.category_name FROM categories c JOIN question_categories qc ON c.category_id = qc.category_id WHERE qc.question_id = ?;";
+        try{
+            SqlRowSet results = template.queryForRowSet(sql, questionId);
+            while (results.next()){
+                Category category = new Category();
+                category= mapRowToCategory(results);
+                categoryList.add(category);
+            }
+        }catch (CannotGetJdbcConnectionException e){
+            throw new CannotGetJdbcConnectionException("[JDBC Category DAO] Unable to connect to the database.");
+        } catch (DataIntegrityViolationException e){
+            throw new DataIntegrityViolationException("[JDBC Category DAO] Unable to retrieve Categories");
+        }
+        return categoryList;
+    }
+
     //MAP
     public Category mapRowToCategory(SqlRowSet results){
         Category category = new Category();

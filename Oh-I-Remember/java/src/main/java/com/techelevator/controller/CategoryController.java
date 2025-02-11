@@ -30,4 +30,5 @@ public class CategoryController {
         System.out.println(LocalDateTime.now() + " User: " + principal.getName() + " retrieved all categories");
         return categoryDao.getAllCategories();
     }
+
 }

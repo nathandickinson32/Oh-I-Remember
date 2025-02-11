@@ -20,6 +20,8 @@ public class JdbcQuestionDao implements QuestionDao{
 
     @Autowired
     private NotificationDao notificationDao;
+    @Autowired
+    private CategoryDao categoryDao;
 
     //CREATE
     @Override
@@ -41,6 +43,11 @@ public class JdbcQuestionDao implements QuestionDao{
         } catch (DataIntegrityViolationException e){
             throw new DataIntegrityViolationException("[JDBC Question DAO] Unable to create a new Question.");
         }
+
+        if(questionDto.getCategoryIds()!=null && !questionDto.getCategoryIds().isEmpty()){
+            assignCategoryToQuestion(questionId, questionDto.getCategoryIds());
+        }
+
         CreateNotificationDto createNotificationDto = new CreateNotificationDto();
         createNotificationDto.setUserId(questionDto.getReceiverId());
         createNotificationDto.setType("new_question");
@@ -60,12 +67,17 @@ public class JdbcQuestionDao implements QuestionDao{
             SqlRowSet results = template.queryForRowSet(sql,questionId);
             if(results.next()){
                 question = mapRowToQuestion(results);
+                List<Category>categories = categoryDao.getAllCategoriesByQuestionId(questionId);
+                if(categories!=null&& !categories.isEmpty()){
+                    question.setCategories(categories);
+                }
             }
         }catch (CannotGetJdbcConnectionException e){
             throw new CannotGetJdbcConnectionException("[JDBC Message DAO] Unable to connect to the database.");
         } catch (DataIntegrityViolationException e){
             throw new DataIntegrityViolationException("[JDBC Message DAO] Unable to retrieve question by id: " + questionId);
         }
+
         return question;
     }
 
@@ -85,6 +97,11 @@ public class JdbcQuestionDao implements QuestionDao{
         } catch (DataIntegrityViolationException e){
             throw new DataIntegrityViolationException("[JDBC Message DAO] Unable to retrieve questions by receiver id: " + receiverId);
         }
+
+        for(Question question: questions){
+            List<Category>categories = categoryDao.getAllCategoriesByQuestionId(question.getQuestionId());
+            question.setCategories(categories);
+        }
             return questions;
     }
 
@@ -103,6 +120,10 @@ public class JdbcQuestionDao implements QuestionDao{
             throw new CannotGetJdbcConnectionException("[JDBC Message DAO] Unable to connect to the database.");
         } catch (DataIntegrityViolationException e){
             throw new DataIntegrityViolationException("[JDBC Message DAO] Unable to retrieve questions by receiver id: " + senderId);
+        }
+        for(Question question: questions){
+            List<Category>categories = categoryDao.getAllCategoriesByQuestionId(question.getQuestionId());
+            question.setCategories(categories);
         }
         return questions;
     }
@@ -182,7 +203,24 @@ public class JdbcQuestionDao implements QuestionDao{
         question.setAnsweredAt(results.getTimestamp("answered_at") != null
                 ? results.getTimestamp("answered_at").toLocalDateTime()
                 : null);
+
         return question;
     }
+
+    public void assignCategoryToQuestion(int questionId, List<Integer> categoryIds){
+        String sql = "Insert INTO question_categories (question_id, category_id) VALUES(?, ?);";
+
+        try {
+            for(int categoryId: categoryIds){
+                template.update(sql, questionId, categoryId);
+
+            }
+        }catch (CannotGetJdbcConnectionException e){
+            throw new CannotGetJdbcConnectionException("[JDBC Question DAO] Unable to connect to the database.");
+        } catch (DataIntegrityViolationException e){
+            throw new DataIntegrityViolationException("[JDBC Question DAO] Unable to add to categories to question.");
+        }
+    }
+
 
 }

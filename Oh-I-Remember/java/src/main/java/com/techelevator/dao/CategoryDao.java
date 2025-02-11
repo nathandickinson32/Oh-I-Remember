@@ -10,4 +10,5 @@ public interface CategoryDao {
 
     //READ
     public List<Category> getAllCategories();
+    public List<Category> getAllCategoriesByQuestionId(int questionId);
 }
