@@ -77,5 +77,49 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.multiselect {
+  width: 100%;
+  max-width: 300px;
+  margin-bottom: 20px;
+}
+
+.multiselect__placeholder {
+  color: #4a6fa5;
+}
+
+.multiselect__content {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+::v-deep(.multiselect__option) {
+  color: #4a6fa5 !important; 
+  background-color: #f0f0f0 !important;
+}
+
+::v-deep(.multiselect__option--highlight) {
+  background-color: #4a6fa5 !important; 
+  color: white !important;
+}
+
+::v-deep(.multiselect__option--selected) {
+  background-color: #4a6fa5 !important;
+  color: white !important;
+}
+
+.filter-section {
+  margin-top: 10px;
+}
+
+.clickable-label {
+  cursor: pointer;
+  color: #4a6fa5;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.clickable-label:hover {
+  color: #ff5733;
+}
 </style>

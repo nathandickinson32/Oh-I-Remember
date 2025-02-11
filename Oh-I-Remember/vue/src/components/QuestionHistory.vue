@@ -130,6 +130,21 @@ export default {
   overflow-y: auto;
 }
 
+::v-deep(.multiselect__option) {
+  color: #4a6fa5 !important; 
+  background-color: #f0f0f0 !important;
+}
+
+::v-deep(.multiselect__option--highlight) {
+  background-color: #4a6fa5 !important; 
+  color: white !important;
+}
+
+::v-deep(.multiselect__option--selected) {
+  background-color: #4a6fa5 !important;
+  color: white !important;
+}
+
 .filter-section {
   margin-top: 10px;
 }
