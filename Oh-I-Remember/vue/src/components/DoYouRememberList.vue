@@ -3,7 +3,7 @@
     <button @click="askQuestion">Ask New Question</button>
    
     <div class="question-list" v-if="questions.length === 0">
-      <h4>All of you questions have been answered!</h4>
+      <h4>No questions need answered!</h4>
     </div>
 
     
