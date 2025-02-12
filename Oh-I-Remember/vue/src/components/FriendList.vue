@@ -122,31 +122,7 @@ export default {
             window.alert("Friend request sent successfully.");
           }
         })
-        .catch((error) => {
-          if (error.response) {
-            const { status, data } = error.response;
-
-            if (status === 404) {
-              window.alert(data.message || "The username does not exist.");
-            } else if (status === 400) {
-              window.alert(data.message || "Invalid username provided.");
-            } else if (status === 409) {
-              window.alert(
-                data.message || "A pending friend request already exists."
-              );
-            } else if (status === 500) {
-              window.alert(
-                data.message ||
-                  "An unexpected server error occurred. Please try again later."
-              );
-            } else {
-              window.alert("An error occurred. Please try again.");
-            }
-          } else {
-            console.error("Error sending friend request:", error);
-            window.alert("An unexpected error occurred. Please try again.");
-          }
-        });
+       
     },
 
     getFriends() {

@@ -62,9 +62,7 @@ export default {
         this.friendRequestResponseDto.requestId = this.friendRequest.requestId;
         this.friendRequestResponseDto.statusId = 3;
         this.sendResponse();
-      } else {
-        console.error("Friend request ID is missing.");
-      }
+      } 
     },
 
     sendResponse() {
@@ -73,13 +71,10 @@ export default {
           if (response.status === 200) {
             window.alert("Successfully responded");
             this.friendRequestResponseDto.statusId = null;
-            window.location.reload();
+            this.router.push({name:"friends-list"})
           }
         })
-        .catch((error) => {
-          console.error("Error processing the request:", error);
-          window.alert("An error occurred. Please try again.");
-        });
+        
     },
   },
 };
