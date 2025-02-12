@@ -27,7 +27,7 @@
 
 <script>
 import FriendService from "../services/FriendService";
-import Friend from "../components/Friend.vue";
+import Friend from "./Friend.vue";
 import NotificationService from "../services/NotificationService";
 export default {
   data() {
