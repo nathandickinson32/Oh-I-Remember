@@ -61,7 +61,7 @@ export default {
     deleteModal() {
       this.deleteQuestion();
       this.isModalVisible = false;
-      this.$router.push({ name: "home" });
+      this.$router.push({ name: "do-you-remember" });
     },
     cancelModal() {
       this.isModalVisible = false;

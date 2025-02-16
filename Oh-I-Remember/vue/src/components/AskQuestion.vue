@@ -62,7 +62,6 @@ export default {
       QuestionService.askQuestionByReceiverId(this.askQuestionDto).then(
         (response) => {
           if (response.status === 201) {
-            console.log(this.askQuestionDto);
             window.alert("Success!");
             this.$router.push({ name: "do-you-remember" });
           }

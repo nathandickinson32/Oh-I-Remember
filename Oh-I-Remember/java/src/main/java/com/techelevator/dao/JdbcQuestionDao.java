@@ -130,7 +130,7 @@ public class JdbcQuestionDao implements QuestionDao{
 
     public List<Question> getQuestionsByUserId(int userId){
         List<Question> questions = new ArrayList<>();
-        String sql = "SELECT * FROM questions WHERE (sender_id = ? OR receiver_id = ?) AND is_answered = true;";
+        String sql = "SELECT * FROM questions WHERE (sender_id = ? OR receiver_id = ?) AND is_answered = true ORDER BY question_id DESC;";
 
         try{
             SqlRowSet results = template.queryForRowSet(sql,userId,userId);

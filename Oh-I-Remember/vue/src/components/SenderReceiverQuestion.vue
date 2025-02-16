@@ -7,10 +7,7 @@
         {{ userType === 'sender' ? 'Sent to' : 'Received from' }}: {{ receiverUserName }}
       </p>
   
-      <div v-if="question.answered">
-        <strong>You answered:</strong>
-        <p>{{ question.answer }}</p>
-      </div>
+        <h3>{{ question.answer }}</h3>
   
       <div
         class="question-category-list"

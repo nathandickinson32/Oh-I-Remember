@@ -13,14 +13,19 @@ BEGIN TRANSACTION;
 --
 --INSERT INTO questions(sender_id, receiver_id, question) VALUES(2,1,'Is this the first question?');
 
-INSERT INTO statuses (status_name)
-VALUES ('Pending'), ('Accepted'), ('Denied');
 
 --INSERT INTO friend_requests (sender_id, receiver_id, status_id, created_at) VALUES(1,2,1, '2025-01-10 09:01:00');
 --
 --INSERT INTO notifications (user_id, type, reference_id, is_read, created_at) VALUES (2, 'new_question', 1, false, '2025-01-10 09:01:00');
 
-INSERT INTO categories(category_name) VALUES('Family & Friends'), ('Events & Travel'), ('Home & Organization'), ('Health & Wellness'), ('Hobbies & Interests'), ('Shopping & Wishlist'), ('Recipes & Food'), ('Tech & Troubleshooting'), ('Random Thoughts & Ideas'), ('Quotes & Fun Facts');
-
 --INSERT INTO question_categories(question_id, category_id) VALUES(1,1);
+
+
+--*******************************Data for dropdowns*********************************
+--
+--INSERT INTO categories(category_name) VALUES('Family & Friends'), ('Events & Travel'), ('Home & Organization'), ('Health & Wellness'), ('Hobbies & Interests'), ('Shopping & Wishlist'), ('Recipes & Food'), ('Tech & Troubleshooting'), ('Random Thoughts & Ideas'), ('Quotes & Fun Facts');
+--INSERT INTO statuses (status_name)
+--VALUES ('Pending'), ('Accepted'), ('Denied');
+
+
 COMMIT TRANSACTION;
