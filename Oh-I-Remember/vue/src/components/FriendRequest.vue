@@ -1,14 +1,14 @@
 <template>
   
     <div class="friend-card">
-      <div class="sent-list" v-if="friendRequest.senderId===$store.getters.loggedInUserId">
+      <div class="sent-list" v-if="friendRequest.senderId===loggedInUserId">
         {{ friendRequest.receiver.firstName }} {{ friendRequest.receiver.lastName }}
         <button @click="cancelRequest">Cancel</button>
       </div>
 
       
       <div
-        v-if="friendRequest.receiverId === $store.getters.loggedInUserId"
+        v-if="friendRequest.receiverId === loggedInUserId"
       >
       {{ friendRequest.sender.firstName }} {{ friendRequest.sender.lastName }}
 
@@ -24,6 +24,12 @@
 import FriendService from "../services/FriendService";
 
 export default {
+  computed: {
+  loggedInUserId() {
+    return this.$store.getters.loggedInUserId;
+  }
+},
+
   data() {
     return {
       friendRequestResponseDto: {
@@ -48,7 +54,10 @@ export default {
             
 
           }
-      })
+      }).catch((error) => {
+      console.error("Error canceling request:", error);
+      window.alert("Failed to cancel request. Please try again.");
+    });
     },
 
     acceptRequest() {
