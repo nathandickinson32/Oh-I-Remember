@@ -4,7 +4,7 @@
    
     <div class="card" id="home-title">
       <router-link class="styled-link"  @click="markAsRead('new_question')" v-bind:to="{ name: 'questions' }"
-        >Oh, I Remember! <span v-if="this.questionNotificationCount>0">{{ this.questionNotificationCount }}</span></router-link
+        >Oh, I Remember! <span v-if="questionNotificationCount>0">{{ questionNotificationCount }}</span></router-link
       >
     </div>
     
@@ -16,12 +16,12 @@
    
     <div class="card" id="home-title">
       <router-link class="styled-link"  @click="markAsRead('new_friend')" v-bind:to="{ name: 'friends-list' }"
-        >Friends List <span v-if="this.newFriendNotificationCount>0">{{ this.newFriendNotificationCount }}</span></router-link
+        >Friends List <span v-if="newFriendNotificationCount+friendRequestNotificationCount>0">{{ newFriendNotificationCount + friendRequestNotificationCount}}</span></router-link
       >
     </div>
     <div class="card" id="home-title">
       <router-link class="styled-link" @click="markAsRead('answer_response')"  v-bind:to="{ name: 'question-history' }"
-        >Question History <span v-if="this.answerNotificationCount>0">{{ this.answerNotificationCount }}</span></router-link
+        >Question History <span v-if="this.answerNotificationCount>0">{{ answerNotificationCount }}</span></router-link
       >
     </div>
   </div>
@@ -36,6 +36,7 @@ export default {
       questionNotificationCount: "",
       answerNotificationCount: "",
       newFriendNotificationCount: "",
+      friendRequestNotificationCount: "",
       notificationReadRequestDto: { type: "" },
     };
   },
@@ -69,6 +70,13 @@ export default {
       NotificationService.getNumberOfNewFriendNotifications().then(
         (response) => {
           this.newFriendNotificationCount = response.data;
+        }
+      );
+    },
+    getNumberOfFriendRequestNotifications() {
+      NotificationService.getNumberOfFriendRequestNotifications().then(
+        (response) => {
+          this.friendRequestNotificationCount = response.data;
         }
       );
     },
