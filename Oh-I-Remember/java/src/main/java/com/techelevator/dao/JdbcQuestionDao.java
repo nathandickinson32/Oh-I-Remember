@@ -128,6 +128,7 @@ public class JdbcQuestionDao implements QuestionDao{
         return questions;
     }
 //question history
+
     public List<Question> getQuestionsByUserId(int userId){
         List<Question> questions = new ArrayList<>();
         String sql = "SELECT * FROM questions WHERE (sender_id = ? OR receiver_id = ?) AND is_answered = true ORDER BY question_id DESC;";
@@ -197,12 +198,14 @@ public class JdbcQuestionDao implements QuestionDao{
 
     //DELETE
     public void deleteQuestion(int questionId){
+        String deleteCategories = "DELETE FROM question_categories WHERE question_id = ?";
+        String deleteNotifications = "DELETE FROM notifications WHERE reference_id = ?";
         String sql = "DELETE FROM questions WHERE question_id =?;";
 
         try{
-            template.update(
-                    sql,questionId
-            );
+            template.update(deleteCategories, questionId);
+            template.update(deleteNotifications, questionId);
+            template.update(sql,questionId);
         }catch (CannotGetJdbcConnectionException e){
             throw new CannotGetJdbcConnectionException("[JDBC Question DAO] Unable to connect to the database.");
         } catch (DataIntegrityViolationException e){
