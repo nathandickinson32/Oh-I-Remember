@@ -67,7 +67,7 @@ public class QuestionController {
         return questionDao.answerQuestion(answerDto, userDao.getUserIdByUsername(principal.getName()));
     }
 
-    @PutMapping(path = "/update-question")
+    @PostMapping(path = "/update-question")
     public Question answerQuestion(@RequestBody UpdateQuestionDto updateQuestionDto, Principal principal){
         System.out.println(LocalDateTime.now() + "User: " + principal.getName() + " added answer to question " + updateQuestionDto.getQuestionId());
         return questionDao.updateQuestion(updateQuestionDto, userDao.getUserIdByUsername(principal.getName()));
