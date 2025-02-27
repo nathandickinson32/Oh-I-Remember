@@ -187,34 +187,12 @@ public class JdbcQuestionDao implements QuestionDao{
                     updateQuestionDto.getQuestion(),
                     updateQuestionDto.getQuestionId()
             );
-            if (updateQuestionDto.getCategoryIds() != null) {
-                updateQuestionCategories(updateQuestionDto.getQuestionId(), updateQuestionDto.getCategoryIds());
-            }
         }catch (CannotGetJdbcConnectionException e){
             throw new CannotGetJdbcConnectionException("[JDBC Question DAO] Unable to connect to the database.");
         } catch (DataIntegrityViolationException e){
             throw new DataIntegrityViolationException("[JDBC Question DAO] Unable to create a new Question.");
         }
         return getQuestionById(updateQuestionDto.getQuestionId());
-    }
-
-    public void updateQuestionCategories(int questionId, List<Integer> newCategoryIds){
-        String deleteOldCategories = "DELETE FROM question_categories WHERE question_id = ?;";
-        String insertNewCategory = "INSERT INTO question_categories (question_id, category_id) VALUES(?, ?);";
-
-        try {
-            template.update(deleteOldCategories, questionId);
-            if(newCategoryIds!=null && !newCategoryIds.isEmpty()){
-                for(int categoryId : newCategoryIds){
-                    template.update(insertNewCategory, questionId, categoryId);
-                }
-            }
-        } catch (CannotGetJdbcConnectionException e) {
-            throw new CannotGetJdbcConnectionException("[JDBC Question DAO] Unable to connect to the database.");
-        } catch (DataIntegrityViolationException e) {
-            throw new DataIntegrityViolationException("[JDBC Question DAO] Unable to update question categories.");
-        }
-
     }
 
 
