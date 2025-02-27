@@ -29,7 +29,7 @@ export default{
         return axios.put('/questions/answer', answerDto)
     },
     updateQuestion(updateQuestionDto) {
-        return axios.put('/questions/update-question', updateQuestionDto)
+        return axios.post('/questions/update-question', updateQuestionDto)
     },
 
 
