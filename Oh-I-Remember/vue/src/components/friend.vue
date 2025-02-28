@@ -43,7 +43,7 @@ export default {
         .then((response) => {
           if (response.status === 200) {
             this.$emit("friendRemoved", this.friend.id);
-            this.$router.replace({ path: '/friends-list', query: { refresh: Date.now() } });          }
+            this.$router.replace({ path: '/friendsnpm -list', query: { refresh: Date.now() } });          }
         })
         .catch((error) => {
           console.error("Error removing friend:", error);
