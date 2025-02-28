@@ -43,7 +43,7 @@ export default {
         .then((response) => {
           if (response.status === 200) {
             this.$emit("friendRemoved", this.friend.id);
-            window.location.reload()
+            this.$router.push({name: "friend-list"})
           }
         })
         .catch((error) => {
