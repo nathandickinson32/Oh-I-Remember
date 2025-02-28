@@ -267,6 +267,17 @@ public class JdbcFriendDao implements FriendDao {
             throw new DataIntegrityViolationException("[JDBC Friend DAO] Unable to delete friend request.");
         }
     }
+    public void deleteFriendship(int userId1, int userId2){
+        String sql = "DELETE FROM freinds where (user_id1 = ? AND user_id2 = ?) OR (user_id1 = ? AND user_id2 = ?);";
+
+        try {
+            template.update(sql, userId1, userId2, userId2, userId1);
+        }catch (CannotGetJdbcConnectionException e) {
+            throw new CannotGetJdbcConnectionException("[JDBC Friend DAO] Unable to connect to the database.");
+        } catch (DataIntegrityViolationException e) {
+            throw new DataIntegrityViolationException("[JDBC Friend DAO] Unable to delete friendship.");
+        }
+    }
 
 
     //MAP

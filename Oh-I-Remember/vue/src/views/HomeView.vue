@@ -16,12 +16,12 @@
    
     <div class="card" id="home-title">
       <router-link class="styled-link"  @click="markAsRead('new_friend')" v-bind:to="{ name: 'friends-list' }"
-        >Friends List <span v-if="newFriendNotificationCount+friendRequestNotificationCount>0">{{ newFriendNotificationCount + friendRequestNotificationCount}}</span></router-link
+        >Friends List <span v-if="notificationCount>0">{{ notificationCount}}</span></router-link
       >
     </div>
     <div class="card" id="home-title">
       <router-link class="styled-link" @click="markAsRead('answer_response')"  v-bind:to="{ name: 'question-history' }"
-        >Question History <span v-if="this.answerNotificationCount>0">{{ answerNotificationCount }}</span></router-link
+        >Question History <span v-if="answerNotificationCount>0">{{ answerNotificationCount }}</span></router-link
       >
     </div>
   </div>
@@ -35,15 +35,14 @@ export default {
     return {
       questionNotificationCount: "",
       answerNotificationCount: "",
-      newFriendNotificationCount: "",
-      friendRequestNotificationCount: "",
       notificationReadRequestDto: { type: "" },
+      notificationCount: 0,
     };
   },
   created() {
     this.getNumberOfQuestionNotifications();
     this.getNumberOfAnswerNotifications();
-    this.getNewFriendNotificationCount();
+    this.getfriendNotificationCount();
   },
   methods: {
 
@@ -65,21 +64,20 @@ export default {
         }
       );
     },
-    getNewFriendNotificationCount() {
+    getfriendNotificationCount() {
+  Promise.all([
+    NotificationService.getNumberOfNewFriendNotifications(),
+    NotificationService.getNumberOfFriendRequestNotifications()
+  ]).then(([newFriendResponse, friendRequestResponse]) => {
+    this.newFriendNotificationCount = newFriendResponse.data;
+    this.newFriendRequestNotificationCount = friendRequestResponse.data;
 
-      NotificationService.getNumberOfNewFriendNotifications().then(
-        (response) => {
-          this.newFriendNotificationCount = response.data;
-        }
-      );
-    },
-    getNumberOfFriendRequestNotifications() {
-      NotificationService.getNumberOfFriendRequestNotifications().then(
-        (response) => {
-          this.friendRequestNotificationCount = response.data;
-        }
-      );
-    },
+    this.notificationCount =
+      Number(this.newFriendNotificationCount) + Number(this.newFriendRequestNotificationCount);
+  });
+}
+  
+   
   },
 };
 </script>

@@ -24,5 +24,6 @@ public interface FriendDao {
 
     //DELETE
     public void deleteFriendRequest(int requestId);
+    public void deleteFriendship(int userId1, int userId2);
 
 }

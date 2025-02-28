@@ -5,6 +5,7 @@ import com.techelevator.dao.UserDao;
 import com.techelevator.model.CreateFriendRequestDto;
 import com.techelevator.model.FriendRequest;
 import com.techelevator.model.FriendRequestResponseDto;
+import com.techelevator.model.IdDto;
 import com.techelevator.model.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -101,5 +102,12 @@ public class FriendController {
     public void deleteFriendRequest(@PathVariable int requestId, Principal principal) {
         System.out.println(LocalDateTime.now() + "User: " + principal.getName() + " deleted request " + requestId);
         friendDao.deleteFriendRequest(requestId);
+    }
+    @DeleteMapping(path = "/delete-friend/")
+    public void deleteFriendship(@RequestBody IdDto idDto, Principal principal) {
+        int userId1 = userDao.getUserIdByUsername(principal.getName());
+        int userId2 = idDto.getId();
+        System.out.println(LocalDateTime.now() + "User: " + principal.getName() + " deleted friendship with user id " + userId2);
+        friendDao.deleteFriendship(userId1, userId2);
     }
 }
