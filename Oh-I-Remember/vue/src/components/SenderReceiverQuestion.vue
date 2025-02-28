@@ -87,7 +87,7 @@
     },
     cancelModal() {
       this.isModalVisible = false;
-      this.$router.push({ name: "do-you-remember" });
+      this.$router.push({ name: "question-history" });
     },
     deleteQuestion() {
       QuestionService.deleteQuestion(this.question.questionId).then(
