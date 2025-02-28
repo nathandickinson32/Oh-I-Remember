@@ -82,7 +82,7 @@ export default {
           if (response.status === 200) {
             window.alert("Successfully responded");
             this.friendRequestResponseDto.statusId = null;
-            this.$router.push({name: "friends-list"})
+            this.$router.push({name: "home"})
           }
         })
         .catch((error) => {

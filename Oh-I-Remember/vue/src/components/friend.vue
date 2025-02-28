@@ -5,7 +5,6 @@
       <button @click="askQuestion">Ask Question</button>
       <button @click="deleteFriend">Remove Friend</button>
     </div>
-  
   </div>
 </template>
 
@@ -34,7 +33,11 @@ export default {
       });
     },
     deleteFriend() {
-      if (!window.confirm(`Are you sure you want to remove ${this.friend.firstName}?`)) {
+      if (
+        !window.confirm(
+          `Are you sure you want to remove ${this.friend.firstName}?`
+        )
+      ) {
         return;
       }
 
@@ -43,7 +46,8 @@ export default {
         .then((response) => {
           if (response.status === 200) {
             this.$emit("friendRemoved", this.friend.id);
-            this.$router.replace({ path: '/friends-list', query: { refresh: Date.now() } });          }
+            this.$router.push({ name: "home" });
+          }
         })
         .catch((error) => {
           console.error("Error removing friend:", error);
@@ -57,11 +61,11 @@ export default {
 <style scoped>
 .button-container {
   display: flex;
-  gap: 10px; 
+  gap: 10px;
 }
 
 button {
-  padding: 8px 16px; 
+  padding: 8px 16px;
   cursor: pointer;
 }
 </style>
