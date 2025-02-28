@@ -1,12 +1,22 @@
 <template>
   <div class="content">
     <multiselect
+      v-model="selectedFriendId"
+      :options="friends"
+      label="fullName"
+      track-by="id"
+      :multiple="false"
+      placeholder="Filter by Friend"
+      id="friends"
+      @clear="clearFriendFilter"
+    />
+    <multiselect
       v-model="selectedCategoryId"
       :options="categories"
       label="categoryName"
       track-by="categoryId"
       :multiple="false"
-      placeholder="Search Categories"
+      placeholder="Filter by Category"
       id="categories"
       @clear="clearCategoryFilter"
     />
@@ -45,12 +55,14 @@ import Multiselect from "vue-multiselect";
 import SenderReceiverQuestion from "./SenderReceiverQuestion.vue";
 import QuestionService from "../services/QuestionService";
 import CategoryService from "../services/CategoryService";
-
+import FriendService from "../services/FriendService";
 export default {
   data() {
     return {
       questions: [],
       categories: [],
+      friends: [],
+      selectedFriendId: null,
       selectedCategoryId: null,
       userTypeFilter: "both",
     };
@@ -64,6 +76,7 @@ export default {
   created() {
     this.getCategories();
     this.getQuestions();
+    this.getFriends();
   },
 
   computed: {
@@ -87,6 +100,14 @@ export default {
         filtered = filtered.filter(
           (question) => question.receiverId === loggedInUserId
         );
+      } 
+      
+      if (this.selectedFriendId) {
+        filtered = filtered.filter(
+          (question) =>
+            question.senderId === this.selectedFriendId.id ||
+            question.receiverId === this.selectedFriendId.id
+        );
       }
 
       return filtered;
@@ -94,6 +115,9 @@ export default {
   },
 
   methods: {
+    clearFriendFilter() {
+  this.selectedFriendId = null;
+},
     getCategories() {
       CategoryService.getAllCategories().then((response) => {
         this.categories = response.data;
@@ -102,6 +126,14 @@ export default {
     getQuestions() {
       QuestionService.getQuestionsByUserId().then((response) => {
         this.questions = response.data;
+      });
+    },
+    getFriends() {
+      FriendService.getFriendsByUserId().then((response) => {
+        this.friends = response.data.map((friend) => ({
+          ...friend,
+          fullName: `${friend.firstName} ${friend.lastName}`,
+        }));
       });
     },
     clearCategoryFilter() {
@@ -131,12 +163,12 @@ export default {
 }
 
 ::v-deep(.multiselect__option) {
-  color: #4a6fa5 !important; 
+  color: #4a6fa5 !important;
   background-color: #f0f0f0 !important;
 }
 
 ::v-deep(.multiselect__option--highlight) {
-  background-color: #4a6fa5 !important; 
+  background-color: #4a6fa5 !important;
   color: white !important;
 }
 
