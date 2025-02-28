@@ -58,6 +58,22 @@ public class JdbcQuestionDao implements QuestionDao{
     }
 
 
+    public void assignCategoryToQuestion(int questionId, List<Integer> categoryIds){
+        String sql = "Insert INTO question_categories (question_id, category_id) VALUES(?, ?);";
+
+        try {
+            for(int categoryId: categoryIds){
+                template.update(sql, questionId, categoryId);
+
+            }
+        }catch (CannotGetJdbcConnectionException e){
+            throw new CannotGetJdbcConnectionException("[JDBC Question DAO] Unable to connect to the database.");
+        } catch (DataIntegrityViolationException e){
+            throw new DataIntegrityViolationException("[JDBC Question DAO] Unable to add to categories to question.");
+        }
+    }
+
+
     //READ
     public Question getQuestionById(int questionId){
         Question question = null;
@@ -233,20 +249,7 @@ public class JdbcQuestionDao implements QuestionDao{
         return question;
     }
 
-    public void assignCategoryToQuestion(int questionId, List<Integer> categoryIds){
-        String sql = "Insert INTO question_categories (question_id, category_id) VALUES(?, ?);";
 
-        try {
-            for(int categoryId: categoryIds){
-                template.update(sql, questionId, categoryId);
-
-            }
-        }catch (CannotGetJdbcConnectionException e){
-            throw new CannotGetJdbcConnectionException("[JDBC Question DAO] Unable to connect to the database.");
-        } catch (DataIntegrityViolationException e){
-            throw new DataIntegrityViolationException("[JDBC Question DAO] Unable to add to categories to question.");
-        }
-    }
 
 
 }

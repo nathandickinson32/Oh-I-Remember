@@ -106,7 +106,7 @@ public class JdbcFriendDao implements FriendDao {
                 "FROM friend_requests f " +
                 "JOIN users u1 ON f.sender_id = u1.user_id " +
                 "JOIN users u2 ON f.receiver_id = u2.user_id " +
-                "WHERE (f.receiver_id = ? OR f.sender_id = ?) AND f.status_id = 1 ORDER BY u.last_name ASC;";
+                "WHERE (f.receiver_id = ? OR f.sender_id = ?) AND f.status_id = 1 ORDER BY u1.last_name ASC;";
 
         try {
             SqlRowSet results = template.queryForRowSet(sql, userId, userId);

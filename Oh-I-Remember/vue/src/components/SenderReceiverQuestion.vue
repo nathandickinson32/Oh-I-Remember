@@ -16,6 +16,10 @@
       >
         {{ category.categoryName }}
       </div><br />
+
+      <!-- <button @click="editQuestionCategories">
+      Edit Question Categories
+    </button> -->
   
       <button @click="showModal">Delete Question</button>
     <message-modal
@@ -63,6 +67,12 @@
     },
   
     methods: {
+      editQuestionCategories() {
+      this.$router.push({
+        name: "edit-question-categories",
+        params: { questionId: this.question.questionId },
+      });
+    },
       showModal() {
       this.message = "Are you sure you want to delete this question?";
       this.type = "WARNING";
