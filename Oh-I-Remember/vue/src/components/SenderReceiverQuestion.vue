@@ -17,16 +17,25 @@
         {{ category.categoryName }}
       </div><br />
   
-      <button v-if="question.answered === false && userType === 'sender'" @click="answerQuestion">
-        Answer Question
-      </button>
+      <button @click="showModal">Delete Question</button>
+    <message-modal
+      :message="message"
+      :type="type"
+      v-if="isModalVisible"
+      @cancelModal="cancelModal"
+      @deleteModal="deleteModal"
+    />
      
     </div>
   </template>
   
   <script>
+  import MessageModal from "../components/MessageModal.vue";
   import QuestionService from "../services/QuestionService";  
   export default {
+    components: {
+    MessageModal,
+  },
     props: {
       question: {
         type: Object,
@@ -43,6 +52,9 @@
       return {
         senderUserName: '',
         receiverUserName: '',
+        message: "",
+      type: "",
+      isModalVisible: false,
       };
     },
   
@@ -51,12 +63,31 @@
     },
   
     methods: {
-      answerQuestion() {
-        this.$router.push({
-          name: "answer-question",
-          params: { questionId: this.question.questionId },
-        });
-      },
+      showModal() {
+      this.message = "Are you sure you want to delete this question?";
+      this.type = "WARNING";
+      this.isModalVisible = true;
+    },
+    deleteModal() {
+      this.deleteQuestion();
+      this.isModalVisible = false;
+      this.$router.push({ name: "home" });
+ 
+
+    },
+    cancelModal() {
+      this.isModalVisible = false;
+      this.$router.push({ name: "do-you-remember" });
+    },
+    deleteQuestion() {
+      QuestionService.deleteQuestion(this.question.questionId).then(
+        (response) => {
+          if (response.status === 200) {
+            window.alert("Success!");
+          }
+        }
+      );
+    },
   
       getUsers(question) {
         QuestionService.getUserById(question.senderId).then((response) => {
@@ -71,37 +102,7 @@
   };
   </script>
   
-  <style scoped>
-  .card {
-    background-color: #f9f9f9;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  .user-info {
-    font-style: italic;
-  }
-  
-  .question-category-list {
-    display: inline-block;
-    background-color: #e0e0e0;
-    padding: 5px 10px;
-    border-radius: 3px;
-    margin-right: 10px;
-  }
-  
-  button {
-    background-color: #4a90e2;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #357ab7;
-  }
+  <style >
+ 
   </style>
   

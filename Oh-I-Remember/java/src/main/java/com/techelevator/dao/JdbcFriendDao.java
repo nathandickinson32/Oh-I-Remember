@@ -83,7 +83,7 @@ public class JdbcFriendDao implements FriendDao {
         List<User> friendsList = new ArrayList<>();
         String sql = "SELECT u.user_id, u.username, u.first_name, u.last_name FROM friends f " +
                 "JOIN users u ON (f.user_id1 = u.user_id OR f.user_id2 = u.user_id) " +
-                "WHERE u.user_id != ? AND (? IN (f.user_id1,f.user_id2));";
+                "WHERE u.user_id != ? AND (? IN (f.user_id1,f.user_id2)) ORDER BY u.last_name ASC;";
         try {
             SqlRowSet results = template.queryForRowSet(sql, userId, userId);
             while(results.next()){
@@ -106,7 +106,7 @@ public class JdbcFriendDao implements FriendDao {
                 "FROM friend_requests f " +
                 "JOIN users u1 ON f.sender_id = u1.user_id " +
                 "JOIN users u2 ON f.receiver_id = u2.user_id " +
-                "WHERE (f.receiver_id = ? OR f.sender_id = ?) AND f.status_id = 1;";
+                "WHERE (f.receiver_id = ? OR f.sender_id = ?) AND f.status_id = 1 ORDER BY u.last_name ASC;";
 
         try {
             SqlRowSet results = template.queryForRowSet(sql, userId, userId);
