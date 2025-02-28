@@ -4,7 +4,7 @@
   
       <p class="user-info">
         Asked By: {{ senderUserName }}<br />
-        {{ userType === 'sender' ? 'Sent to' : 'Received By:' }}: {{ receiverUserName }}
+        {{ userType === 'sender' ? 'Sent to' : 'Received By' }}: {{ receiverUserName }}
       </p>
   
         <h3>{{ question.answer }}</h3>
