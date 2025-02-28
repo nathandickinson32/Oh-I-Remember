@@ -1,8 +1,11 @@
 <template>
   <div class="friend-card">
     <h3>{{ friend.firstName }} {{ friend.lastName }}</h3>
-    <button @click="askQuestion">Ask Question</button>
-    <button @click="deleteFriend">Remove Friend</button>
+    <div class="button-container">
+      <button @click="askQuestion">Ask Question</button>
+      <button @click="deleteFriend">Remove Friend</button>
+    </div>
+  
   </div>
 </template>
 
@@ -53,5 +56,13 @@ export default {
 </script>
 
 <style scoped>
+.button-container {
+  display: flex;
+  gap: 10px; 
+}
 
+button {
+  padding: 8px 16px; 
+  cursor: pointer;
+}
 </style>
