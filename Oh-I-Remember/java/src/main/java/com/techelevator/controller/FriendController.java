@@ -103,7 +103,7 @@ public class FriendController {
         System.out.println(LocalDateTime.now() + "User: " + principal.getName() + " deleted request " + requestId);
         friendDao.deleteFriendRequest(requestId);
     }
-    @DeleteMapping(path = "/delete-friend/")
+    @DeleteMapping(path = "/delete-friend")
     public void deleteFriendship(@RequestBody IdDto idDto, Principal principal) {
         int userId1 = userDao.getUserIdByUsername(principal.getName());
         int userId2 = idDto.getId();

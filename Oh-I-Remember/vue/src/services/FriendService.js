@@ -34,5 +34,9 @@ export default {
     //DELETE
     deleteFriendRequest(requestId){
         return axios.delete(`/friends/delete-request/${requestId}`)
+    },
+
+    deleteFriend(idDto) {
+        return axios.delete('/friends/delete-friend', {data: idDto})
     }
 }

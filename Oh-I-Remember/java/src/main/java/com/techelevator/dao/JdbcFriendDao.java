@@ -268,7 +268,7 @@ public class JdbcFriendDao implements FriendDao {
         }
     }
     public void deleteFriendship(int userId1, int userId2){
-        String sql = "DELETE FROM freinds where (user_id1 = ? AND user_id2 = ?) OR (user_id1 = ? AND user_id2 = ?);";
+        String sql = "DELETE FROM friends where (user_id1 = ? AND user_id2 = ?) OR (user_id1 = ? AND user_id2 = ?);";
 
         try {
             template.update(sql, userId1, userId2, userId2, userId1);
