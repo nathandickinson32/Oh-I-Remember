@@ -196,20 +196,43 @@ public class JdbcQuestionDao implements QuestionDao{
     }
     @Override
     public Question updateQuestion(UpdateQuestionDto updateQuestionDto, int userId) {
-        String sql = "UPDATE questions SET question = ? WHERE question_id =?";
+        String updateSql = "UPDATE questions SET question = ? WHERE question_id = ?";
+
         try {
-            template.update(
-                    sql,
-                    updateQuestionDto.getQuestion(),
-                    updateQuestionDto.getQuestionId()
-            );
-        }catch (CannotGetJdbcConnectionException e){
+            template.update(updateSql, updateQuestionDto.getQuestion(), updateQuestionDto.getQuestionId());
+
+            if (updateQuestionDto.getCategoryIds() != null) {
+                updateQuestionCategories(updateQuestionDto.getQuestionId(), updateQuestionDto.getCategoryIds());
+            }
+
+        } catch (CannotGetJdbcConnectionException e) {
             throw new CannotGetJdbcConnectionException("[JDBC Question DAO] Unable to connect to the database.");
-        } catch (DataIntegrityViolationException e){
-            throw new DataIntegrityViolationException("[JDBC Question DAO] Unable to create a new Question.");
+        } catch (DataIntegrityViolationException e) {
+            throw new DataIntegrityViolationException("[JDBC Question DAO] Unable to update the Question.");
         }
+
         return getQuestionById(updateQuestionDto.getQuestionId());
     }
+
+    public Question updateQuestionCategories(int questionId, List<Integer> categoryIds) {
+        String deleteSql = "DELETE FROM question_categories WHERE question_id = ?";
+        String insertSql = "INSERT INTO question_categories (question_id, category_id) VALUES (?, ?)";
+
+        try {
+            template.update(deleteSql, questionId);
+
+            for (int categoryId : categoryIds) {
+                template.update(insertSql, questionId, categoryId);
+            }
+
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new CannotGetJdbcConnectionException("[JDBC Question DAO] Unable to connect to the database.");
+        } catch (DataIntegrityViolationException e) {
+            throw new DataIntegrityViolationException("[JDBC Question DAO] Unable to update categories for question.");
+        }
+        return getQuestionById(questionId);
+    }
+
 
 
     //DELETE

@@ -5,6 +5,7 @@ import com.techelevator.dao.QuestionDao;
 import com.techelevator.dao.UserDao;
 import com.techelevator.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.relational.core.sql.In;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -68,11 +69,18 @@ public class QuestionController {
     }
 
     @PutMapping(path = "/update-question")
-    public Question answerQuestion(@RequestBody UpdateQuestionDto updateQuestionDto, Principal principal){
+    public Question updateQuestion(@RequestBody UpdateQuestionDto updateQuestionDto, Principal principal){
         System.out.println(LocalDateTime.now() + "User: " + principal.getName() + " added answer to question " + updateQuestionDto.getQuestionId());
         return questionDao.updateQuestion(updateQuestionDto, userDao.getUserIdByUsername(principal.getName()));
     }
 
+    @PutMapping(path = "/update-question-categories")
+    public Question updateQuestionCategories(@RequestBody UpdateQuestionDto updateQuestionDto, Principal principal){
+        System.out.println(LocalDateTime.now() + "User: " + principal.getName() + " added answer to question " + updateQuestionDto.getQuestionId());
+        List<Integer> categoryIds = updateQuestionDto.getCategoryIds();
+        int questionId = updateQuestionDto.getQuestionId();
+        return questionDao.updateQuestionCategories(questionId, categoryIds);
+    }
     //DELETE
     @DeleteMapping(path="/delete/{questionId}")
     public void deleteQuestion(@PathVariable int questionId, Principal principal){

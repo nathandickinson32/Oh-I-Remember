@@ -53,11 +53,12 @@ export default {
   methods: {
     updateQuestionCategories() {
       this.updateQuestionDto.questionId = this.question.questionId;
-      QuestionService.updateQuestion(this.updateQuestionDto).then(
+      this.updateQuestionDto.categoryIds = this.updateQuestionDto.categoryIds.map((category) => category.categoryId)
+      QuestionService.updateQuestionCategories(this.updateQuestionDto).then(
         (response) => {
           if (response.status === 200) {
             window.alert("Question Updated!");
-            this.$router.push({ name: "do-you-remember" });
+            this.$router.push({ name: "question-history" });
           }
         }
       );

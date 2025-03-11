@@ -17,9 +17,9 @@
         {{ category.categoryName }}
       </div><br />
 
-      <!-- <button @click="editQuestionCategories">
+      <button @click="editQuestionCategories">
       Edit Question Categories
-    </button> -->
+    </button>
   
       <button @click="showModal">Delete Question</button>
     <message-modal

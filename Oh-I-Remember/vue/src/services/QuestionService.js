@@ -31,6 +31,9 @@ export default{
     updateQuestion(updateQuestionDto) {
         return axios.put('/questions/update-question', updateQuestionDto)
     },
+    updateQuestionCategories(updateQuestionDto) {
+        return axios.put('/questions/update-question-categories', updateQuestionDto)
+    },
 
 
     //DELETE

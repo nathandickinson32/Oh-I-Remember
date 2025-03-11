@@ -22,6 +22,7 @@ public interface QuestionDao {
     //UPDATE
     public Question answerQuestion(AnswerDto answerDto, int userId);
     public Question updateQuestion(UpdateQuestionDto updateQuestionDto, int userId);
+    public Question updateQuestionCategories(int questionId, List<Integer> categoryIds);
 
     //DELETE
     public void deleteQuestion(int questionId);
